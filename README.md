@@ -10,7 +10,7 @@
 
 ---
 
-## 📌 About
+## About
 
 This project started as a simple Java OOP exercise and has gradually evolved into a modular banking application.
 
@@ -20,7 +20,7 @@ Every new topic I learned was integrated into this project, making it a living r
 
 ---
 
-# ✨ Features
+# Features
 
 ### Account Management
 
@@ -65,7 +65,7 @@ Every new topic I learned was integrated into this project, making it a living r
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 Bank/
@@ -100,7 +100,7 @@ Bank/
 
 ---
 
-# 📚 Concepts Practiced
+# Concepts Practiced
 
 - Classes & Objects
 - Methods
@@ -120,7 +120,7 @@ Bank/
 
 ---
 
-# 🧠 What I Learned
+# What I Learned
 
 This project taught me much more than Java syntax.
 
@@ -135,7 +135,7 @@ I learned how to:
 
 ---
 
-# 🚀 Upcoming Features
+# Upcoming Features
 
 - File handling (save & load account data)
 - Banking statistics dashboard
@@ -147,7 +147,7 @@ I learned how to:
 
 ---
 
-# 🛠️ Tech Stack
+# Tech Stack
 
 - Java
 - Object-Oriented Programming
@@ -158,13 +158,13 @@ I learned how to:
 
 ---
 
-# 📸 Preview
+# Preview
 
 *(Add screenshots of your console application here.)*
 
 ---
 
-# 📈 Development Journey
+# Development Journey
 
 This repository is actively maintained as part of my **#100DaysOfCode** challenge.
 
@@ -172,7 +172,7 @@ Instead of abandoning projects after learning a concept, I continuously improve 
 
 ---
 
-# 🤝 Feedback
+# Feedback
 
 If you have suggestions for improving the project, feel free to open an issue or share your ideas.
 
@@ -180,4 +180,4 @@ I'd love to learn from your feedback.
 
 ---
 
-## ⭐ If you found this project interesting, consider giving it a star!
+## If you found this project interesting, consider giving it a star!
