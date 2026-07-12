@@ -1,7 +1,12 @@
 package Bank;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.Scanner; // Step 1: Imported the utility framework
+import java.util.Scanner; //Imported the utility framework
 
 public class Account implements Transaction {
     //Core fields set to protected so child classes can use them directly
@@ -88,7 +93,9 @@ public class Account implements Transaction {
                 System.out.println("5. Exit System");
                 System.out.println("6. Transfer Money");
                 System.out.println("7. Transaction History");
-                System.out.println("Enter Your Choice (1-7): ");
+                System.out.println("8. Save Accounts to File");
+                System.out.println("9. Load Accounts from File");
+                System.out.println("Enter Your Choice (1-9): ");
 
                 int choice = sc.nextInt();
                 sc.nextLine(); //Clears enter key from the stream
@@ -124,6 +131,14 @@ public class Account implements Transaction {
                         viewTransactionhistory(sc, accounts);
                         break;
 
+                    case 8:
+                        saveAccountsToFile(sc, accounts);
+                        break;
+
+                    case 9:
+                        loadAccountsFromFile(sc, accounts);
+                        break;
+
                     default:
                         System.out.print("Invalid Option!! Please choose a option between 1 to 7.");
 
@@ -148,7 +163,8 @@ public class Account implements Transaction {
         System.out.println("5. Exit System");
         System.out.println("6. Transfer Money");
         System.out.println("7. Transaction History.");
-        System.out.println("Enter Your Choice (1-7): ");
+        System.out.println("8. Save Accounts to File");
+        System.out.println("Enter Your Choice (1-8): ");
     }
     //Method for case 4 "Dispaly all accounts"
     private static void displayAccountDetails(ArrayList<Account> accounts) {
@@ -315,4 +331,35 @@ public class Account implements Transaction {
         return null; //returning null if not found
     }
 
+    //METHOD FOR CASE 8 "SAVE ACCOUNTS TO FILE"
+    private static void saveAccountsToFile(Scanner sc, ArrayList<Account> accounts) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("accounts.txt"))) {
+            for (Account acc : accounts) {
+                writer.write(acc.accountNumber + "," + acc.accountHolderName + "," + acc.balance);
+                writer.newLine();
+            }
+            System.out.println("Accounts saved to accounts.txt successfully!!");
+        } catch (IOException e) {
+            System.out.println("Error in saving account: " + e.getMessage());
+        } 
+    }
+        
+    //METHOD FOR CASE 9 "LOAD ACCOUNTS FROM FILE"
+    private static void loadAccountsFromFile(Scanner sc, ArrayList<Account> accounts) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("accounts.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                int accountNumber = Integer.parseInt(parts[0].trim());
+                String accountHolderName = parts[1].trim();
+                double balance = Double.parseDouble(parts[2].trim());
+                
+                Account account = new Account(accountHolderName, accountNumber, balance);
+                accounts.add(account);
+            }
+            System.out.println("Accounts loaded from accounts.txt successfully!!");
+        } catch (IOException e) {
+            System.out.println("Error in loading accounts: " + e.getMessage());
+        }
+    }
 }
