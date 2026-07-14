@@ -212,6 +212,13 @@ public class Account implements Transaction {
         } else {
             try {
                 account.deposit(depositAmt);
+
+                //UI upgrade 
+                System.out.println("\n======================================");
+                System.out.println("$" + depositAmt + " deposited Successfully!" );
+                System.out.println("\n Current Balance: $" + account.getBalance());
+                System.out.println("\n Transaction Recorded!");
+                System.out.println("\n======================================");
             } catch (IllegalArgumentException e) {
                 System.out.println("Error: " + e.getMessage());
             }
