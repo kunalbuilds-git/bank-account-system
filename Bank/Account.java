@@ -95,7 +95,8 @@ public class Account implements Transaction {
                 System.out.println("7. Transaction History");
                 System.out.println("8. Save Accounts to File");
                 System.out.println("9. Load Accounts from File");
-                System.out.println("Enter Your Choice (1-9): ");
+                System.out.println("10. Delete Account");
+                System.out.println("Enter Your Choice (1-10): ");
 
                 int choice = sc.nextInt();
                 sc.nextLine(); //Clears enter key from the stream
@@ -139,6 +140,10 @@ public class Account implements Transaction {
                         loadAccountsFromFile(sc, accounts);
                         break;
 
+                    case 10:
+                        deleteAccount(sc, accounts);
+                        break;
+
                     default:
                         System.out.print("Invalid Option!! Please choose a option between 1 to 7.");
 
@@ -164,9 +169,10 @@ public class Account implements Transaction {
         System.out.println("6. Transfer Money");
         System.out.println("7. Transaction History.");
         System.out.println("8. Save Accounts to File");
-        System.out.println("Enter Your Choice (1-8): ");
+        System.out.println("10. Delete Account");
+        System.out.println("Enter Your Choice (1-10): ");
     }
-    //Method for case 4 "Dispaly all accounts"
+    //Method for case 4 "Display all accounts"
     private static void displayAccountDetails(ArrayList<Account> accounts) {
         if(accounts.isEmpty()){
             System.out.println("There is nothing in our inventory! No active accounts.");
@@ -373,6 +379,32 @@ public class Account implements Transaction {
             System.out.println("Accounts loaded from accounts.txt successfully!!");
         } catch (IOException e) {
             System.out.println("Error in loading accounts: " + e.getMessage());
+        }
+    }
+
+    //METHOD FOR CASE 10 "DELETE ACCOUNT"
+    private static void deleteAccount(Scanner sc, ArrayList<Account> accounts) {
+        System.out.println("Enter Account number you want to delete: ");
+        int deleteAccNum = sc.nextInt();
+        sc.nextLine();
+
+        //calling helper method to check the accountr number
+        Account account = findAccountByNumber(accounts, deleteAccNum);
+
+        if(account == null) {
+            System.out.println("Error: Account: " + deleteAccNum + " not found!!");
+        } else {
+            System.out.println("Are you sure? Type 'Y' to confirm or 'N' to cancel: ");
+            char confirmationYN = sc.next().charAt(0);
+            
+            if(confirmationYN == 'Y' || confirmationYN == 'y'){
+                //deleting the account
+                accounts.remove(account);
+                System.out.println("Account Deleted Successfully!!");
+            }
+            else {
+                System.out.println("Deletion cancelled, back to menu...");
+            }
         }
     }
 }
