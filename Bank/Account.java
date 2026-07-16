@@ -193,6 +193,14 @@ public class Account implements Transaction {
         System.out.println("Enter Your Unique Account Number: ");
         int accNum = sc.nextInt();
 
+        //Preventing duplicate accounts
+        Account existingAccount = findAccountByNumber(accounts, accNum);
+        if (existingAccount != null) {
+            //Account already exists
+            System.out.println("Error: Account Already exists! Try new Account number");
+            return;
+        } 
+
         System.out.println("Enter Initial Deposite Balance: ");
         Double initBalance = sc.nextDouble();
         sc.nextLine();
@@ -200,6 +208,14 @@ public class Account implements Transaction {
         //Instantiates and saves it inside your dynamic list!
         accounts.add(new Account(name, accNum, initBalance));
         System.out.println("Account opened and initial amount added Successfully!");
+
+        //Showing account details after creation of account
+        System.out.println("\n===========================================");
+        System.out.println("OPERATION SUCCESSFUL!!");
+        System.out.println("Account Number : " + accNum);
+        System.out.println("Holder : " + name);
+        System.out.println("Balance : initBalance");
+        System.out.println("\n===========================================");
     }
 
     //Method for case 2 "Deposite Money"
@@ -356,16 +372,14 @@ public class Account implements Transaction {
             System.out.println("Error in saving account: " + e.getMessage());
         } 
     }
-        
 
-
-
-
-
-    
     //METHOD FOR CASE 9 "LOAD ACCOUNTS FROM FILE"
     private static void loadAccountsFromFile(Scanner sc, ArrayList<Account> accounts) {
         try (BufferedReader reader = new BufferedReader(new FileReader("accounts.txt"))) {
+
+            //removing old accounts from loding in the ArrayList
+            accounts.clear(); //clears old and deleted accounts from loading 
+
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
@@ -406,5 +420,10 @@ public class Account implements Transaction {
                 System.out.println("Deletion cancelled, back to menu...");
             }
         }
+        //Account details after deleting account
+        System.out.println("\n========================================");
+        System.out.println("DELETION SUCCESSFUL!");
+        System.out.println("Account Deleted : " + deleteAccNum + " has been deleted.");
+        System.out.println("\n========================================");
     }
 }
