@@ -98,7 +98,8 @@ public class Account implements Transaction {
                 System.out.println("9. Load Accounts from File");
                 System.out.println("10. Delete Account");
                 System.out.println("11. Edit Account Details");
-                System.out.println("Enter Your Choice (1-11): ");
+                System.out.println("12. Search Account by Name");
+                System.out.println("Enter Your Choice (1-12): ");
 
                 int choice = sc.nextInt();
                 sc.nextLine(); //Clears enter key from the stream
@@ -150,6 +151,11 @@ public class Account implements Transaction {
                         editAccountDetails(sc, accounts);
                         break;
 
+                    case 12:
+                        searchAccountByName(sc, accounts);
+                        break;
+
+
                     default:
                         System.out.print("Invalid Option!! Please choose a option between 1 to 7.");
 
@@ -177,7 +183,8 @@ public class Account implements Transaction {
         System.out.println("8. Save Accounts to File");
         System.out.println("10. Delete Account");
         System.out.println("11. Edit Account Details");
-        System.out.println("Enter Your Choice (1-11): ");
+        System.out.println("12. Search Account by Name");
+        System.out.println("Enter Your Choice (1-12): ");
     }
     //Method for case 4 "Display all accounts"
     private static void displayAccountDetails(ArrayList<Account> accounts) {
@@ -467,5 +474,25 @@ public class Account implements Transaction {
     //using a setter to set a new name 
     public void setAccountHolderNewName(String newName) {
         this.accountHolderName = newName;
+    }
+
+    //Creating Method for case 12 "SEARCH ACCOUNT BY NAME"
+    private static void searchAccountByName(Scanner sc, ArrayList<Account> accounts) {
+        System.out.println("Enter the name of the account Holder: ");
+        String searchName = sc.nextLine();
+
+        boolean found = false;
+
+        System.out.println("\n--- SEARCH RESULTS ---");
+        for (Account acc :  accounts) {
+            if(acc.getAccountHolderName().equalsIgnoreCase(searchName)) {
+                System.out.println("Account Found!!");
+                acc.displayAccountDetails();
+                found = true;
+            }   
+        }
+        if (!found) {
+             System.out.println("Error: No account found with this name: " + searchName + ".");
+        }
     }
 }
