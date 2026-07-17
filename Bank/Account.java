@@ -96,7 +96,8 @@ public class Account implements Transaction {
                 System.out.println("8. Save Accounts to File");
                 System.out.println("9. Load Accounts from File");
                 System.out.println("10. Delete Account");
-                System.out.println("Enter Your Choice (1-10): ");
+                System.out.println("11. Edit Account Details");
+                System.out.println("Enter Your Choice (1-11): ");
 
                 int choice = sc.nextInt();
                 sc.nextLine(); //Clears enter key from the stream
@@ -144,6 +145,10 @@ public class Account implements Transaction {
                         deleteAccount(sc, accounts);
                         break;
 
+                    case 11:
+                        editAccountDetails(sc, accounts);
+                        break;
+
                     default:
                         System.out.print("Invalid Option!! Please choose a option between 1 to 7.");
 
@@ -170,7 +175,8 @@ public class Account implements Transaction {
         System.out.println("7. Transaction History.");
         System.out.println("8. Save Accounts to File");
         System.out.println("10. Delete Account");
-        System.out.println("Enter Your Choice (1-10): ");
+        System.out.println("11. Edit Account Details");
+        System.out.println("Enter Your Choice (1-11): ");
     }
     //Method for case 4 "Display all accounts"
     private static void displayAccountDetails(ArrayList<Account> accounts) {
@@ -402,7 +408,7 @@ public class Account implements Transaction {
         int deleteAccNum = sc.nextInt();
         sc.nextLine();
 
-        //calling helper method to check the accountr number
+        //calling helper method to check the account number
         Account account = findAccountByNumber(accounts, deleteAccNum);
 
         if(account == null) {
@@ -425,5 +431,21 @@ public class Account implements Transaction {
         System.out.println("DELETION SUCCESSFUL!");
         System.out.println("Account Deleted : " + deleteAccNum + " has been deleted.");
         System.out.println("\n========================================");
+    }
+
+    //Method for case 11 "EDIT ACCOUNT DETAILS"
+    private static void editAccountDetails(Scanner sc, ArrayList<Account> accounts) {
+        System.out.println("Enter the Account Number: ");
+        int editingAccNumber = sc.nextInt();
+
+        //checking if the account number is valid or not
+        Account account = findAccountByNumber(accounts, editingAccNumber);
+
+        if(account == null) {
+            System.out.println("Error: Account not found. Please check if the account number is correct?");    
+            return;        
+        } else {
+            System.out.println("What you wnat to edit? \n 1. Name \n 2. Cancel");                    
+        }
     }
 }
