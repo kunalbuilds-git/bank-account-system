@@ -52,6 +52,7 @@ public class Account implements Transaction {
             System.out.println("Amount withdrew Successfully: $" + amount);
             //adding logging to this method
             this.addTransaction(" [Withdraw] $" + amount + " withdrawn successfully");
+            
         } else {
             throw new IllegalArgumentException("Insufficient amount for this withdrawal!");
         }           
@@ -277,6 +278,12 @@ public class Account implements Transaction {
         } else {
             try {
                 account.withdraw(withdrawalAmt);
+                System.out.println("\n===========================================");
+                System.out.println("OPERATION SUCCESSFUL!!");
+                System.out.println("Account Number : " + withdrawalaccNum);
+                System.out.println("Withdrawal amount : $" + withdrawalAmt); 
+                System.out.println("\n===========================================");
+
             } catch(IllegalArgumentException e) {
                 System.out.println("Error: "  + e.getMessage());
             }
@@ -325,6 +332,12 @@ public class Account implements Transaction {
             receiverAccount.addTransaction(" [Transfer] Received: $" + transferAmt + ", from Account: " + senderAccNum + ".");
 
              System.out.println("Transfer Successful!");
+             System.out.println("\n===========================================");
+             System.out.println("OPERATION SUCCESSFUL!!");
+             System.out.println("Sender's Account Number : " + senderAccNum);
+             System.out.println("Receiver's Account Number : " + receiverAccNum);
+             System.out.println("Amount transffered : $" + transferAmt);
+             System.out.println("===========================================");
         } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());            
         }
@@ -364,7 +377,7 @@ public class Account implements Transaction {
         }
     }   
 
-    //helper method to validate and fimd teh account number
+    //helper method to validate and find the account number
     private static Account findAccountByNumber(ArrayList<Account> accounts, int accountNumber){
         for(Account acc : accounts){
             if (acc.accountNumber == accountNumber) {
@@ -486,8 +499,11 @@ public class Account implements Transaction {
         System.out.println("\n--- SEARCH RESULTS ---");
         for (Account acc :  accounts) {
             if(acc.getAccountHolderName().equalsIgnoreCase(searchName)) {
+                System.out.println("\n===========================================");
+                System.out.println("OPERATION SUCCESSFUL!!");
                 System.out.println("Account Found!!");
                 acc.displayAccountDetails();
+                System.out.println("\n===========================================");
                 found = true;
             }   
         }
