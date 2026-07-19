@@ -508,7 +508,7 @@ public class Account implements Transaction {
             }   
         }
         if (!found) {
-             System.out.println("Error: No account found with this name: " + searchName + ".");
+            System.out.println("Error: No account found with this name: " + searchName + ".");
         }
     }
 }
