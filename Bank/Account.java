@@ -15,6 +15,7 @@ public class Account implements Transaction {
     protected int accountNumber;
     protected double balance;
     private ArrayList<String> transactionHistory;
+    static int nextAccountNumber = 1001;
     
     // Main constructor - sets up name, number, and checks for negative starting balance, transaction logs
     public Account(String name, int accountNo, double accountbalance) {
@@ -205,8 +206,9 @@ public class Account implements Transaction {
         System.out.println("Enter Account Holder's Name: ");
         String name = sc.nextLine();
 
-        System.out.println("Enter Your Unique Account Number: ");
-        int accNum = sc.nextInt();
+        int accNum = nextAccountNumber;
+        nextAccountNumber++;
+        System.out.println("System generated Account Number: " + accNum);
 
         //Preventing duplicate accounts
         Account existingAccount = findAccountByNumber(accounts, accNum);
