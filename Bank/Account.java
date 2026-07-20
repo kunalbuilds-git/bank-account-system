@@ -101,7 +101,8 @@ public class Account implements Transaction {
                 System.out.println("10. Delete Account");
                 System.out.println("11. Edit Account Details");
                 System.out.println("12. Search Account by Name");
-                System.out.println("Enter Your Choice (1-12): ");
+                System.out.println("13. Generate Monthly Bank Statement");
+                System.out.println("Enter Your Choice (1-13): ");
 
                 int choice = sc.nextInt();
                 sc.nextLine(); //Clears enter key from the stream
@@ -157,6 +158,9 @@ public class Account implements Transaction {
                         searchAccountByName(sc, accounts);
                         break;
 
+                    case 13:
+                        montlyBankStatement(sc, accounts);
+
 
                     default:
                         System.out.print("Invalid Option!! Please choose a option between 1 to 7.");
@@ -186,6 +190,7 @@ public class Account implements Transaction {
         System.out.println("10. Delete Account");
         System.out.println("11. Edit Account Details");
         System.out.println("12. Search Account by Name");
+        System.out.println("13. Generate Monthly Bank Statement");
         System.out.println("Enter Your Choice (1-12): ");
     }
     //Method for case 4 "Display all accounts"
@@ -512,5 +517,33 @@ public class Account implements Transaction {
         if (!found) {
             System.out.println("Error: No account found with this name: " + searchName + ".");
         }
+    }
+
+    //METHOD FOR CASE 13 "GENERATE MONTHLY BANK STATEMENT"
+    private static void montlyBankStatement(Scanner sc, ArrayList<Account> accounts) {
+        System.out.println("Enter Account number to generate statement: ");
+        int statementAccNum = sc.nextInt();
+
+        //calling helper method to check if that account exists or not
+        Account account = findAccountByNumber(accounts, statementAccNum);
+            if(account == null) {
+                System.out.println("Error: Account not found. Please check if the account number is correct?");
+                return;
+            } else {
+                // Print the professional bank statement here
+                System.out.println("\n=====================================");
+                System.out.println("   MONTHLY BANK STATEMENT");
+                System.out.println("=====================================");
+                System.out.println("\nAccount Number  : " + account.accountNumber);
+                System.out.println("Account Holder  : " + account.getAccountHolderName());
+                System.out.println("\n--- TRANSACTIONS ---");
+    
+                // Display transaction history
+                account.displayTransactionhistory();
+                
+                System.out.println("\n--- SUMMARY ---");
+                System.out.println("Current Balance : $" + account.getBalance());
+                System.out.println("\n=====================================");
+            }
     }
 }
