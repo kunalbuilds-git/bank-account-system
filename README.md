@@ -1,71 +1,110 @@
-# 🏦 Java Banking System
+# Java Banking System
 
-> A console-based banking application built in Java to simulate core banking operations while applying Object-Oriented Programming, clean architecture, and software engineering principles.
+> A console-based banking application built in Java to simulate real-world banking operations while applying Object-Oriented Programming, clean architecture, and software engineering principles.
 
 ![Java](https://img.shields.io/badge/Java-100%25-orange)
 ![OOP](https://img.shields.io/badge/OOP-Inheritance%20%7C%20Polymorphism-blue)
 ![Collections](https://img.shields.io/badge/Collections-ArrayList-success)
+![File%20Handling](https://img.shields.io/badge/File%20Handling-Java%20IO-yellow)
 ![Status](https://img.shields.io/badge/Status-Actively%20Maintained-brightgreen)
 ![GitHub](https://img.shields.io/badge/GitHub-Open%20Source-black)
 
 ---
 
-## About
+# About
 
-This project started as a simple Java OOP exercise and has gradually evolved into a modular banking application.
+This project started as a simple Java OOP exercise and has gradually evolved into a feature-rich console banking application.
 
-Instead of building many disconnected beginner projects, I chose to continuously improve one application while learning new Java concepts.
+Instead of creating many disconnected beginner projects, I chose to continuously improve one application by integrating every new Java concept I learn.
 
-Every new topic I learned was integrated into this project, making it a living record of my progress as a Java developer.
+As I progressed through Java, I kept enhancing this project with new features including File Handling, Transaction History, Persistent Storage, Monthly Statements, Search Functionality, and more.
+
+This repository represents both my Java learning journey and my approach to building software incrementally.
 
 ---
 
 # Features
 
-### Account Management
+## Account Management
 
-- Create new accounts
-- Deposit money
-- Withdraw money
-- Transfer money between accounts
-- Display all accounts
-- View transaction history
+- Create New Account
+- Automatic Account Number Generation
+- Deposit Money
+- Withdraw Money
+- Transfer Money
+- Edit Account Holder Details
+- Delete Account
+- Search Account by Name
+- Display All Accounts
 
 ---
 
-### Object-Oriented Programming
+## Transaction Management
 
+- Transaction History
+- Automatic Transaction Recording
+- Monthly Bank Statement Generator
+
+---
+
+## File Handling
+
+- Save Accounts to File
+- Load Accounts from File
+- Persistent Storage using Java IO
+- BufferedReader
+- BufferedWriter
+- FileReader
+- FileWriter
+- Try-with-Resources
+
+---
+
+## Validation & Error Handling
+
+- Duplicate Account Prevention
+- Account Existence Validation
+- Invalid Input Handling
+- Exception Handling
+- Safe File Operations
+
+---
+
+# Object-Oriented Programming Concepts
+
+- Classes & Objects
+- Encapsulation
 - Inheritance
 - Polymorphism
-- Dynamic Method Dispatch
-- Abstract Classes
 - Interfaces
 - Constructor Chaining
 - Method Overriding
-- Encapsulation
+- Static Variables
+- Abstraction
 
 ---
 
-### Software Engineering Concepts
+# Software Engineering Practices
 
-- Modular architecture
-- Separation of concerns
-- Reusable helper methods
-- Code refactoring
-- DRY (Don't Repeat Yourself)
-- Exception handling
-- Input validation
-
----
-
-### Collections
-
-- Dynamic account management using `ArrayList`
-- Individual transaction history using `ArrayList<String>`
+- Modular Architecture
+- Separation of Concerns
+- Helper Methods
+- DRY Principle
+- Code Refactoring
+- Clean Console UI
+- Exception Handling
+- Persistent Data Management
 
 ---
 
-## Project Structure
+# Collections Used
+
+- `ArrayList<Account>`
+- `ArrayList<String>` for Transaction History
+
+---
+
+# Project Structure
 
 ```
 Bank/
@@ -74,13 +113,16 @@ Bank/
 ├── SavingsAccount.java
 ├── CurrentAccount.java
 ├── Transaction.java
+└── README.md
 ```
 
 ---
 
-# ⚙️ Current Functionality
+# Current Functionality
 
 ✅ Create Account
+
+✅ Automatic Account Number Generation
 
 ✅ Deposit Money
 
@@ -88,30 +130,43 @@ Bank/
 
 ✅ Transfer Money
 
+✅ Edit Account Holder Details
+
+✅ Delete Account
+
+✅ Search Account by Name
+
 ✅ Display All Accounts
 
 ✅ Transaction History
 
-✅ Centralized Account Search
+✅ Monthly Bank Statement Generator
+
+✅ Save Accounts to File
+
+✅ Load Accounts from File
+
+✅ Dynamic Collections
 
 ✅ Exception Handling
 
-✅ Dynamic Collections (ArrayList)
-
 ---
 
-# Concepts Practiced
+# 📚 Concepts Practiced
 
 - Classes & Objects
-- Methods
 - Constructors
 - Encapsulation
 - Inheritance
 - Polymorphism
-- Abstract Classes
 - Interfaces
-- Exception Handling
+- Constructor Chaining
+- Method Overriding
+- Static Variables
 - ArrayLists
+- File Handling
+- Exception Handling
+- Input Validation
 - Loops
 - Switch Statements
 - Scanner
@@ -120,47 +175,79 @@ Bank/
 
 ---
 
-# What I Learned
+# 🚀 Highlights
+
+- Console Banking System
+- Persistent File Storage
+- Automatic Account Number Generation
+- Transaction History Tracking
+- Monthly Statement Generator
+- Search Functionality
+- Modular Codebase
+- Clean Architecture
+- Continuous Feature Development
+
+---
+
+# 💡 What I Learned
 
 This project taught me much more than Java syntax.
 
-I learned how to:
+Through building and continuously improving it, I learned how to:
 
 - Design reusable code
 - Break large programs into smaller methods
+- Refactor instead of rewriting
+- Apply OOP concepts to real applications
+- Work with Java Collections
+- Implement File Handling for persistent storage
 - Build maintainable software
-- Apply OOP to real problems
-- Refactor existing code instead of rewriting everything
-- Think about software architecture instead of individual classes
+- Improve project architecture over time
 
 ---
 
-# Upcoming Features
+# 🔜 Upcoming Features
 
-- File handling (save & load account data)
-- Banking statistics dashboard
-- Search account by name
-- Persistent storage
-- Interest calculation improvements
-- Better console UI
-- Unit testing
+- Banking Statistics Dashboard
+- Interest Calculation
+- Savings & Current Account Behaviors
+- JDBC Database Integration
+- User Authentication
+- JUnit Testing
+- Spring Boot REST API
+- GUI Version
 
 ---
 
-# Tech Stack
+# 🛠 Tech Stack
 
 - Java
-- Object-Oriented Programming
 - Java Collections Framework
+- Java IO
+- Object-Oriented Programming
 - Git
 - GitHub
 - VS Code
 
 ---
 
-# Preview
+# 📸 Preview
 
-*(Add screenshots of your console application here.)*
+## Main Menu
+
+*(Add Screenshot Here)*
+
+---
+
+## Monthly Statement
+
+*(Add Screenshot Here)*
+
+---
+
+## Transaction History
+
+*(Add Screenshot Here)*
 
 ---
 
@@ -168,16 +255,24 @@ I learned how to:
 
 This repository is actively maintained as part of my **#100DaysOfCode** challenge.
 
-Instead of abandoning projects after learning a concept, I continuously improve this application by integrating every new Java topic I study.
+Rather than abandoning projects after learning a concept, I continuously improve this banking system by integrating every new Java topic I study.
+
+The project has grown from a basic OOP exercise into a much more complete banking application through consistent incremental development.
 
 ---
 
 # Feedback
 
-If you have suggestions for improving the project, feel free to open an issue or share your ideas.
+If you have suggestions for improving the project, feel free to open an Issue or share your ideas.
 
-I'd love to learn from your feedback.
+I'm always looking to improve both the project and my coding skills.
 
 ---
 
-## If you found this project interesting, consider giving it a star!
+## Support
+
+If you found this project interesting or helpful, consider giving it a **Star**.
+
+It motivates me to keep building and sharing my progress.
+
+Thank you for visiting!
