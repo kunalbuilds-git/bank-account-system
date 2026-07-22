@@ -16,11 +16,13 @@ public class Account implements Transaction {
     protected double balance;
     private ArrayList<String> transactionHistory;
     static int nextAccountNumber = 1001;
+    private int accountPIN;
     
     // Main constructor - sets up name, number, and checks for negative starting balance, transaction logs
-    public Account(String name, int accountNo, double accountbalance) {
+    public Account(String name, int accountNo, double accountbalance, int pin) {
         this.accountHolderName = name;
         this.accountNumber = accountNo;
+        this.accountPIN = pin;
         if (accountbalance >= 0) {
             this.balance = accountbalance;
         } else {
@@ -205,6 +207,44 @@ public class Account implements Transaction {
         }
     }
 
+    //Setting getter method for the account PIN
+    public int getAccountPIN() {
+        return this.accountPIN;
+    }
+
+    //Method for CREATING LOGIN METHOD
+    private static void loginAccount(Scanner sc, ArrayList<Account> accounts) {
+        System.out.println("Enter your Account Number: ");
+        int loginAccountNumber = sc.nextInt();
+        sc.nextLine();
+
+        Account account = findAccountByNumber(accounts, loginAccountNumber);
+
+        if(account == null){
+            System.out.println("Error: Account does not exists!");
+            return;
+        } else {
+            System.out.println("Enter PIN: ");
+            int accPIN = sc.nextInt();
+            sc.nextLine();
+
+            //checking of the pin matches teh original pin
+            if (accPIN == account.getAccountPIN()) {
+                //Pin is correcta nd show login successfully
+                System.out.println("=================================================");
+                System.out.println("---LOGIN SUCCESSFUL!!---");
+                System.out.println("Welcome, " + account.getAccountHolderName());
+                System.out.println("=================================================");
+                //next we'll show menu to do tasks in the logined account
+
+            } else {
+                //Pin is wrong
+                System.out.println("Error: Pin is wrong, retry again!");
+                return;
+            }
+        }
+    }
+
     //Method for case 1 "Create account"
     private static void createAccount(Scanner sc, ArrayList<Account> accounts) {
 
@@ -223,12 +263,15 @@ public class Account implements Transaction {
             return;
         } 
 
+        System.out.println("Set PIN for your account: ");
+        int accountPIN = sc.nextInt();
+
         System.out.println("Enter Initial Deposite Balance: ");
         Double initBalance = sc.nextDouble();
         sc.nextLine();
 
         //Instantiates and saves it inside your dynamic list!
-        accounts.add(new Account(name, accNum, initBalance));
+        accounts.add(new Account(name, accNum, initBalance, accountPIN));
         System.out.println("Account opened and initial amount added Successfully!");
 
         //Showing account details after creation of account
@@ -421,7 +464,7 @@ public class Account implements Transaction {
                 String accountHolderName = parts[1].trim();
                 double balance = Double.parseDouble(parts[2].trim());
                 
-                Account account = new Account(accountHolderName, accountNumber, balance);
+                Account account = new Account(accountHolderName, accountNumber, balance, 0);
                 accounts.add(account);
             }
             System.out.println("Accounts loaded from accounts.txt successfully!!");
@@ -546,4 +589,6 @@ public class Account implements Transaction {
                 System.out.println("\n=====================================");
             }
     }
+
+    
 }
