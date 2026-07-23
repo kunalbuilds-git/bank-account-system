@@ -79,7 +79,7 @@ public class Account implements Transaction {
         return this.balance;
     }
 
-    //DAY 70: DYNAMIC ARRAYLIST IMPLEMENTATION
+    //DYNAMIC ARRAYLIST IMPLEMENTATION
     public static void main(String[] args) {
         System.out.println("--- BANKING SYSTEM POLYMORPHIC ARRAYLIST --- \n");
 
@@ -104,7 +104,8 @@ public class Account implements Transaction {
                 System.out.println("11. Edit Account Details");
                 System.out.println("12. Search Account by Name");
                 System.out.println("13. Generate Monthly Bank Statement");
-                System.out.println("Enter Your Choice (1-13): ");
+                System.out.println("14. Login");
+                System.out.println("Enter Your Choice (1-14): ");
 
                 int choice = sc.nextInt();
                 sc.nextLine(); //Clears enter key from the stream
@@ -162,6 +163,15 @@ public class Account implements Transaction {
 
                     case 13:
                         montlyBankStatement(sc, accounts);
+                        break;
+
+                    case 14:
+                        Account loggedInAccount = loginAccount(sc, accounts);
+
+                        if (loggedInAccount != null) {
+                            accountMenu(sc, loggedInAccount, accounts);
+                        }
+                        break;
 
 
                     default:
@@ -189,11 +199,13 @@ public class Account implements Transaction {
         System.out.println("6. Transfer Money");
         System.out.println("7. Transaction History.");
         System.out.println("8. Save Accounts to File");
+        System.out.println("9. Load Accounts from File");
         System.out.println("10. Delete Account");
         System.out.println("11. Edit Account Details");
         System.out.println("12. Search Account by Name");
         System.out.println("13. Generate Monthly Bank Statement");
-        System.out.println("Enter Your Choice (1-12): ");
+        System.out.println("14. Login");
+        System.out.println("Enter Your Choice (1-14): ");
     }
     //Method for case 4 "Display all accounts"
     private static void displayAccountDetails(ArrayList<Account> accounts) {
@@ -210,39 +222,6 @@ public class Account implements Transaction {
     //Setting getter method for the account PIN
     public int getAccountPIN() {
         return this.accountPIN;
-    }
-
-    //Method for CREATING LOGIN METHOD
-    private static void loginAccount(Scanner sc, ArrayList<Account> accounts) {
-        System.out.println("Enter your Account Number: ");
-        int loginAccountNumber = sc.nextInt();
-        sc.nextLine();
-
-        Account account = findAccountByNumber(accounts, loginAccountNumber);
-
-        if(account == null){
-            System.out.println("Error: Account does not exists!");
-            return;
-        } else {
-            System.out.println("Enter PIN: ");
-            int accPIN = sc.nextInt();
-            sc.nextLine();
-
-            //checking of the pin matches teh original pin
-            if (accPIN == account.getAccountPIN()) {
-                //Pin is correcta nd show login successfully
-                System.out.println("=================================================");
-                System.out.println("---LOGIN SUCCESSFUL!!---");
-                System.out.println("Welcome, " + account.getAccountHolderName());
-                System.out.println("=================================================");
-                //next we'll show menu to do tasks in the logined account
-
-            } else {
-                //Pin is wrong
-                System.out.println("Error: Pin is wrong, retry again!");
-                return;
-            }
-        }
     }
 
     //Method for case 1 "Create account"
@@ -581,7 +560,7 @@ public class Account implements Transaction {
                 System.out.println("Account Holder  : " + account.getAccountHolderName());
                 System.out.println("\n--- TRANSACTIONS ---");
     
-                // Display transaction history
+                // Display transaction history                              
                 account.displayTransactionhistory();
                 
                 System.out.println("\n--- SUMMARY ---");
@@ -589,6 +568,45 @@ public class Account implements Transaction {
                 System.out.println("\n=====================================");
             }
     }
-
     
+    //Method case 14 for CREATING "LOGIN"
+    private static Account loginAccount(Scanner sc, ArrayList<Account> accounts) {
+        System.out.println("Enter your Account Number: ");
+        int loginAccountNumber = sc.nextInt();
+        sc.nextLine();
+
+        Account account = findAccountByNumber(accounts, loginAccountNumber);
+
+        if(account == null){
+            System.out.println("Error: Account does not exists!");
+            return null;
+        } else {
+            System.out.println("Enter PIN: ");
+            int accPIN = sc.nextInt();
+            sc.nextLine();
+
+            //checking of the pin matches teh original pin
+            if (accPIN == account.getAccountPIN()) {
+                //Pin is correcta nd show login successfully
+                System.out.println("=================================================");
+                System.out.println("---LOGIN SUCCESSFUL!!---");
+                System.out.println("Welcome, " + account.getAccountHolderName());
+                System.out.println("=================================================");
+
+                return account;
+
+            } else {
+                //Pin is wrong
+                System.out.println("Error: Pin is wrong, retry again!");
+                return null;
+            }
+        }
+    }
+
+    //METHOD for account menu
+
+    private static void accountMenu(Scanner sc, Account loggedInAccount, ArrayList<Account> accounts) {
+        System.out.println("Welcome " + loggedInAccount.getAccountHolderName());
+
+    }
 }
