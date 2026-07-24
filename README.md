@@ -152,7 +152,7 @@ Bank/
 
 ---
 
-# 📚 Concepts Practiced
+# Concepts Practiced
 
 - Classes & Objects
 - Constructors
@@ -175,7 +175,7 @@ Bank/
 
 ---
 
-# 🚀 Highlights
+# Highlights
 
 - Console Banking System
 - Persistent File Storage
@@ -189,7 +189,7 @@ Bank/
 
 ---
 
-# 💡 What I Learned
+# What I Learned
 
 This project taught me much more than Java syntax.
 
@@ -206,7 +206,7 @@ Through building and continuously improving it, I learned how to:
 
 ---
 
-# 🔜 Upcoming Features
+# Upcoming Features
 
 - Banking Statistics Dashboard
 - Interest Calculation
@@ -219,7 +219,7 @@ Through building and continuously improving it, I learned how to:
 
 ---
 
-# 🛠 Tech Stack
+# Tech Stack
 
 - Java
 - Java Collections Framework
@@ -231,7 +231,7 @@ Through building and continuously improving it, I learned how to:
 
 ---
 
-# 📸 Preview
+# Preview
 
 ## Main Menu
 
