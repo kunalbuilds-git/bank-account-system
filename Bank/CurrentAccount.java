@@ -4,9 +4,9 @@ package Bank;
 public class CurrentAccount extends Account {
     private double overdraftLimit;
 
-    //Constructor taking 3 same arguments from the parent class 
-    public CurrentAccount(String accountHolderName, int accountNumber, double balance, double overdraftLimit) {
-        super(accountHolderName, accountNumber, balance);
+    // Constructor taking 5 arguments from the parent class
+    public CurrentAccount(String accountHolderName, int accountNumber, double balance, int pin, double overdraftLimit) {
+        super(accountHolderName, accountNumber, balance, pin);
         this.overdraftLimit = overdraftLimit;
     }
     
