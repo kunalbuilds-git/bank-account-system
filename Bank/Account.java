@@ -115,7 +115,7 @@ public class Account implements Transaction {
                     break;
                 }
 
-                switch(choice){
+                switch (choice) {
 
                     case 1:
                         createAccount(sc, accounts);
@@ -603,10 +603,61 @@ public class Account implements Transaction {
         }
     }
 
-    //METHOD for account menu
+    //METHOD for account menu under login option
 
     private static void accountMenu(Scanner sc, Account loggedInAccount, ArrayList<Account> accounts) {
         System.out.println("Welcome " + loggedInAccount.getAccountHolderName());
+        while(true) {
+            System.out.println("1. Deposit");
+            System.out.println("2. Withdraw");
+            System.out.println("3. Transfer");
+            System.out.println("4. Transaction History");
+            System.out.println("5. Logout");
+
+            //taking input for the options selected 
+            System.out.print("Enter your choice: ");
+            int option = sc.nextInt();
+            sc.nextLine();
+
+            //adding a switch case for all of the menu options 
+            switch (option) {
+
+            case 1:
+                depositForLoggedInUser(sc, loggedInAccount);
+                break;
+
+            case 5:
+                System.out.println("Logged out Successfully!");
+                return;
+
+            default:
+                System.out.println("Invalid option! Please try again.");
+        }
+        }        
+    }
+
+    private static void depositForLoggedInUser(Scanner sc, Account loggedInAccount) {
+
+        //asking for the deposit amount 
+        System.out.print("Enter the amount to deposit: $");
+        double depositAmount = sc.nextDouble();
+        sc.nextLine();
+
+        //handle negative or zero amount deposition through exception handling & deposit the amount in the account
+        try{
+            loggedInAccount.deposit(depositAmount);
+
+            System.out.println("\n===============================================");
+            System.out.println("Deposite Successful!");
+            System.out.println("Amount Deposited: $" + depositAmount);
+            System.out.println("Current Balance: $" + loggedInAccount.getBalance());
+            System.out.println("===============================================");
+
+        } catch (IllegalArgumentException e) {
+            //handles invalid deposits
+            System.out.println("Error: " + e.getMessage());            
+        }
+
 
     }
 }
