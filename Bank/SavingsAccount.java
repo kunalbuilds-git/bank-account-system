@@ -4,8 +4,9 @@ package Bank;
 public class SavingsAccount extends Account {
     private double interestRate;
 
-    public SavingsAccount(String accountHolderName, int accountNumber, double balance, double interestRate) {
-        super(accountHolderName, accountNumber, balance);
+    // Constructor taking 5 arguments from the parent class
+    public SavingsAccount(String accountHolderName, int accountNumber, double balance, int pin, double interestRate) {
+        super(accountHolderName, accountNumber, balance, pin);
         this.interestRate = interestRate;
     }
     
