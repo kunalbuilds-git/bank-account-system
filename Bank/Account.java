@@ -642,6 +642,10 @@ public class Account implements Transaction {
                 depositForLoggedInUser(sc, loggedInAccount);
                 break;
 
+            case 2:
+                withdrawForLoggedInUser(sc, loggedInAccount);
+                break;
+
             case 5:
                 System.out.println("Logged out Successfully!");
                 return;
@@ -672,6 +676,30 @@ public class Account implements Transaction {
         } catch (IllegalArgumentException e) {
             //handles invalid deposits
             System.out.println("Error: " + e.getMessage());         
+        }
+    }
+
+    private static void withdrawForLoggedInUser(Scanner sc, Account loggedInAccount) {
+        
+        // Asking for the withdrawal amount
+        System.out.println("Enter the amount to withdraw: $");
+        double withdrawAmount = sc.nextDouble();
+        sc.nextLine(); //buffer clearence
+
+
+        // Handle invalid withdrawals and perform the transaction
+        try{
+            loggedInAccount.withdraw(withdrawAmount);
+
+            System.out.println("\n===============================================");
+            System.out.println("Withdrawal Successful!");
+            System.out.println("Amount Withdrawn: $" + withdrawAmount);
+            System.out.println("Current Balance: $" + loggedInAccount.getBalance());
+            System.out.println("===============================================");
+
+        } catch (IllegalArgumentException e) {
+            //showing the error msg
+            System.out.println("Error: " + e.getMessage());
         }
     }
 }
