@@ -603,11 +603,27 @@ public class Account implements Transaction {
         }
     }
 
+    //setting a getter for account number 
+            public int getAccountNumber() {
+                return this.accountNumber;
+            }
+
     //METHOD for account menu under login option
 
     private static void accountMenu(Scanner sc, Account loggedInAccount, ArrayList<Account> accounts) {
         System.out.println("Welcome " + loggedInAccount.getAccountHolderName());
         while(true) {
+
+            //checking if account still exists after login or not
+
+            //verification with the helper method
+            Account existingAccount = findAccountByNumber(accounts, loggedInAccount.getAccountNumber());
+
+            if (existingAccount == null) {
+                System.out.println("This account no longer exists.");
+                return;
+            }
+
             System.out.println("1. Deposit");
             System.out.println("2. Withdraw");
             System.out.println("3. Transfer");
@@ -655,9 +671,7 @@ public class Account implements Transaction {
 
         } catch (IllegalArgumentException e) {
             //handles invalid deposits
-            System.out.println("Error: " + e.getMessage());            
+            System.out.println("Error: " + e.getMessage());         
         }
-
-
     }
 }
