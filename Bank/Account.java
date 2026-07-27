@@ -138,7 +138,7 @@ public class Account implements Transaction {
                         break;                      
 
                     case 7:
-                        viewTransactionhistory(sc, accounts);
+                        viewTransactionHistory(sc, accounts);
                         break;
 
                     case 8:
@@ -379,7 +379,7 @@ public class Account implements Transaction {
     }
 
     //Displaying that transsaction history
-    public void displayTransactionhistory() {
+    public void displayTransactionHistory() {
         System.out.println("\n--- Transaction History for Account number: " + this.accountNumber + " ---");
         if (transactionHistory.isEmpty()) {
             System.out.println("No transactions performed yet!!");
@@ -402,7 +402,7 @@ public class Account implements Transaction {
             System.out.println("Error: Account Number: " + accNum + " not found!");            
         } else{
             System.out.println("\n---TRANSACTION HISTORY---");
-            account.displayTransactionhistory();
+            account.displayTransactionHistory();
         }
     }   
 
@@ -561,7 +561,7 @@ public class Account implements Transaction {
                 System.out.println("\n--- TRANSACTIONS ---");
     
                 // Display transaction history                              
-                account.displayTransactionhistory();
+                account.displayTransactionHistory();
                 
                 System.out.println("\n--- SUMMARY ---");
                 System.out.println("Current Balance : $" + account.getBalance());
@@ -646,6 +646,10 @@ public class Account implements Transaction {
                 withdrawForLoggedInUser(sc, loggedInAccount);
                 break;
 
+            case 3:
+                transferForLoggedInUser(sc, loggedInAccount, accounts);
+                break;
+
             case 4:
                 transactionHistoryForLoggedInUser(loggedInAccount);
                 break;
@@ -707,11 +711,69 @@ public class Account implements Transaction {
         }
     }
 
+    //Method for the Transfer for logged in user
+    private static void transferForLoggedInUser(Scanner sc, Account loggedInAccount, ArrayList<Account> accounts) {
+
+        //Ask for recipent's account number
+        System.out.println("Enter Account number to tranfer Money in: ");
+        int receiverAccountNumber = sc.nextInt();
+        sc.nextLine(); //clearing the buffer
+
+        //find the account
+        Account receiverAccount = findAccountByNumber(accounts, receiverAccountNumber);
+
+        //avoiding to transfer to teh same account
+        if(receiverAccountNumber == loggedInAccount.getAccountNumber()) {
+            System.out.println("Error: You cannot transfer money to your own account!");
+            return;
+        }
+
+        //ensure if it exists
+        if(receiverAccount == null) {
+            System.out.println("Error: Receiver doesn't exist! Check another account number.");
+            return;
+            
+        }
+        //ask for thr amount
+        System.out.println("Enter teh Amount to transsfer: $");
+        double transferAmount = sc.nextDouble();
+        sc.nextLine(); //clearing buffer
+
+        //perform the transfer
+        try {
+            // Withdraw from the logged-in user's account
+            loggedInAccount.withdraw(transferAmount);
+
+            // Deposit into the receiver's account
+            receiverAccount.deposit(transferAmount);
+
+            // Record the transaction for both accounts
+            loggedInAccount.addTransaction("[Transfer] $" + transferAmount + " transferred to Account: " + receiverAccount.getAccountNumber());
+
+            receiverAccount.addTransaction("[Transfer] Received $" + transferAmount + " from Account: " + loggedInAccount.getAccountNumber());
+
+        // Display success message
+        System.out.println("\n===============================================");
+        System.out.println("Transfer Successful!");
+        System.out.println("Transferred Amount: $" + transferAmount);
+        System.out.println("Receiver Account: " + receiverAccount.getAccountNumber());
+        System.out.println("Current Balance: $" + loggedInAccount.getBalance());
+        System.out.println("===============================================");
+
+        } catch (IllegalArgumentException e) {
+
+            // Handle insufficient balance or invalid amount
+            System.out.println("Error: " + e.getMessage());
+
+        } 
+    }
+
     //Method for transaction History for logged in user
     private static void transactionHistoryForLoggedInUser(Account loggedInAccount) {
 
+        //printimg the transaction history
         System.out.println("\n========== TRANSACTION HISTORY ==========");
-        loggedInAccount.displayTransactionhistory();
+        loggedInAccount.displayTransactionHistory();
         
     }
 }
