@@ -646,6 +646,10 @@ public class Account implements Transaction {
                 withdrawForLoggedInUser(sc, loggedInAccount);
                 break;
 
+            case 4:
+                transactionHistoryForLoggedInUser(loggedInAccount);
+                break;
+
             case 5:
                 System.out.println("Logged out Successfully!");
                 return;
@@ -701,5 +705,13 @@ public class Account implements Transaction {
             //showing the error msg
             System.out.println("Error: " + e.getMessage());
         }
+    }
+
+    //Method for transaction History for logged in user
+    private static void transactionHistoryForLoggedInUser(Account loggedInAccount) {
+
+        System.out.println("\n========== TRANSACTION HISTORY ==========");
+        loggedInAccount.displayTransactionhistory();
+        
     }
 }
