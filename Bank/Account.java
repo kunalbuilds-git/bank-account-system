@@ -138,7 +138,7 @@ public class Account implements Transaction {
                         break;                      
 
                     case 7:
-                        viewTransactionHistory(sc, accounts);
+                        viewTransactionhistory(sc, accounts);
                         break;
 
                     case 8:
@@ -629,6 +629,7 @@ public class Account implements Transaction {
             System.out.println("3. Transfer");
             System.out.println("4. Transaction History");
             System.out.println("5. Monthly Statement");
+            System.out.println("6. Change Pin");
             System.out.println("9. Logout");
 
             //taking input for the options selected 
@@ -657,6 +658,9 @@ public class Account implements Transaction {
 
             case 5:
                 monthlyStatementForLoggedInUser(loggedInAccount);
+
+            case 6:
+                changePINforLoggedInUser(sc, loggedInAccount);
 
             case 9:
                 System.out.println("Logged out Successfully!");
@@ -782,19 +786,69 @@ public class Account implements Transaction {
     }
 
 
-    //Method for MONTHLY STATEMENT for trh logegd in user's account
+    //Method for MONTHLY STATEMENT for the logged in user's account
     private static void monthlyStatementForLoggedInUser(Account loggedInAccount) {
 
         // Display success message
         System.out.println("\n========== MONTHLY BANK STATEMENT ==========");
         System.out.println("Account Number: " + loggedInAccount.getAccountNumber());
         System.out.println("Account Holder: " + loggedInAccount.getAccountHolderName());
-        
+
         System.out.println("\nTransaction History: ");
         loggedInAccount.displayTransactionHistory();
 
         System.out.println("\nCurrent Balance: $" + loggedInAccount.getBalance());
         System.out.println("===============================================");
         
+    }
+
+    //Setter method to update the account PIN
+    public void setAccountPIN(int newPIN) {
+        this.accountPIN = newPIN;
+    }
+
+    //Method for changePINforLoggedInUser "changing pin"
+    private static void changePINforLoggedInUser(Scanner sc, Account loggedInAccount) {
+        //Enter current pin
+        System.out.println("Enter your current pin: ");
+        int currentPin = sc.nextInt();
+        sc.nextLine(); //clearing the input buffer
+        
+        //if the current is incorrect then return
+        if(currentPin != loggedInAccount.getAccountPIN()) {
+            System.out.println("Error: Incorrect PIN!");
+            return;
+        }
+
+        //if all good then, enter new pin 
+        System.out.println("Enter your new PIN: ");
+        int newPin = sc.nextInt();
+        sc.nextLine(); 
+        
+        //validating of the current pin is same to new pin or not
+        if(currentPin == newPin) {
+            System.out.println("New PIN cannot be same as the current PIN");
+            return;
+        }
+
+        //confirm new pin
+        System.out.println("Confirm your new PIN: ");
+        int confirmPin = sc.nextInt();
+        sc.nextLine();
+
+        //do they match, handle yes no condition. If yes, update the pin
+        if(newPin == confirmPin) {
+            System.out.println("Pin upadted Successfully");
+            //upadting the pin 
+            loggedInAccount.setAccountPIN(newPin);
+        } else {
+            System.out.println("Error: PINs do nit match.");
+            return;
+        }
+        //Success
+        System.out.println("\n==============================================");
+        System.out.println("PIN changed Successfully!");
+        System.out.println("==============================================");
+    
     }
 }
