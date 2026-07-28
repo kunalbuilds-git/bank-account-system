@@ -378,7 +378,7 @@ public class Account implements Transaction {
         transactionHistory.add(description);
     }
 
-    //Displaying that transsaction history
+    //Displaying that transaction history
     public void displayTransactionHistory() {
         System.out.println("\n--- Transaction History for Account number: " + this.accountNumber + " ---");
         if (transactionHistory.isEmpty()) {
@@ -628,7 +628,8 @@ public class Account implements Transaction {
             System.out.println("2. Withdraw");
             System.out.println("3. Transfer");
             System.out.println("4. Transaction History");
-            System.out.println("5. Logout");
+            System.out.println("5. Monthly Statement");
+            System.out.println("9. Logout");
 
             //taking input for the options selected 
             System.out.print("Enter your choice: ");
@@ -655,6 +656,9 @@ public class Account implements Transaction {
                 break;
 
             case 5:
+                monthlyStatementForLoggedInUser(loggedInAccount);
+
+            case 9:
                 System.out.println("Logged out Successfully!");
                 return;
 
@@ -774,6 +778,23 @@ public class Account implements Transaction {
         //printimg the transaction history
         System.out.println("\n========== TRANSACTION HISTORY ==========");
         loggedInAccount.displayTransactionHistory();
+        
+    }
+
+
+    //Method for MONTHLY STATEMENT for trh logegd in user's account
+    private static void monthlyStatementForLoggedInUser(Account loggedInAccount) {
+
+        // Display success message
+        System.out.println("\n========== MONTHLY BANK STATEMENT ==========");
+        System.out.println("Account Number: " + loggedInAccount.getAccountNumber());
+        System.out.println("Account Holder: " + loggedInAccount.getAccountHolderName());
+        
+        System.out.println("\nTransaction History: ");
+        loggedInAccount.displayTransactionHistory();
+
+        System.out.println("\nCurrent Balance: $" + loggedInAccount.getBalance());
+        System.out.println("===============================================");
         
     }
 }
