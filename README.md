@@ -6,6 +6,7 @@
 ![OOP](https://img.shields.io/badge/OOP-Inheritance%20%7C%20Polymorphism-blue)
 ![Collections](https://img.shields.io/badge/Collections-ArrayList-success)
 ![File%20Handling](https://img.shields.io/badge/File%20Handling-Java%20IO-yellow)
+![Authentication](https://img.shields.io/badge/Authentication-PIN%20Login-blueviolet)
 ![Status](https://img.shields.io/badge/Status-Actively%20Maintained-brightgreen)
 ![GitHub](https://img.shields.io/badge/GitHub-Open%20Source-black)
 
@@ -17,9 +18,32 @@ This project started as a simple Java OOP exercise and has gradually evolved int
 
 Instead of creating many disconnected beginner projects, I chose to continuously improve one application by integrating every new Java concept I learn.
 
-As I progressed through Java, I kept enhancing this project with new features including File Handling, Transaction History, Persistent Storage, Monthly Statements, Search Functionality, and more.
+As I progressed through Java, I continuously enhanced this project by implementing features such as file persistence, transaction history, monthly statements, secure PIN authentication, session-based banking, account management, search functionality, and persistent storage.
 
-This repository represents both my Java learning journey and my approach to building software incrementally.
+This repository represents both my Java learning journey and my approach to building software incrementally while following clean coding practices.
+
+---
+
+# Project Evolution
+
+This project has been developed incrementally as part of my Java learning journey.
+
+Implemented so far:
+
+- Java Fundamentals
+- Object-Oriented Programming
+- Collections Framework
+- File Handling
+- Persistent Storage
+- Transaction History
+- Monthly Statements
+- Account Search
+- Secure PIN Authentication
+- Session-Based Banking
+- Account Management
+- Modular Architecture
+
+The project continues to grow as I learn new Java concepts.
 
 ---
 
@@ -28,6 +52,8 @@ This repository represents both my Java learning journey and my approach to buil
 ## Account Management
 
 - Create New Account
+- Secure Account Login (PIN Authentication)
+- Logged-in Banking Menu
 - Automatic Account Number Generation
 - Deposit Money
 - Withdraw Money
@@ -43,7 +69,21 @@ This repository represents both my Java learning journey and my approach to buil
 
 - Transaction History
 - Automatic Transaction Recording
+- Money Transfers
 - Monthly Bank Statement Generator
+- Logged-in Transaction History
+- Logged-in Monthly Statement
+
+---
+
+## Authentication & Security
+
+- PIN-based Login
+- Authenticated Banking Session
+- Session Validation
+- Logged-in User Operations
+- Secure Banking Workflow
+- Re-authentication Support (In Progress)
 
 ---
 
@@ -64,7 +104,10 @@ This repository represents both my Java learning journey and my approach to buil
 
 - Duplicate Account Prevention
 - Account Existence Validation
-- Invalid Input Handling
+- Logged-in Session Validation
+- Invalid Deposit Validation
+- Invalid Withdrawal Validation
+- Self-transfer Prevention
 - Exception Handling
 - Safe File Operations
 
@@ -79,8 +122,8 @@ This repository represents both my Java learning journey and my approach to buil
 - Interfaces
 - Constructor Chaining
 - Method Overriding
-- Static Variables
 - Abstraction
+- Static Variables
 
 ---
 
@@ -91,6 +134,8 @@ This repository represents both my Java learning journey and my approach to buil
 - Helper Methods
 - DRY Principle
 - Code Refactoring
+- Authentication Flow
+- Session Management
 - Clean Console UI
 - Exception Handling
 - Persistent Data Management
@@ -100,7 +145,7 @@ This repository represents both my Java learning journey and my approach to buil
 # Collections Used
 
 - `ArrayList<Account>`
-- `ArrayList<String>` for Transaction History
+- `ArrayList<String>` (Transaction History)
 
 ---
 
@@ -113,7 +158,8 @@ Bank/
 ├── SavingsAccount.java
 ├── CurrentAccount.java
 ├── Transaction.java
-└── README.md
+├── README.md
+└── data/
 ```
 
 ---
@@ -122,7 +168,11 @@ Bank/
 
 ✅ Create Account
 
-✅ Automatic Account Number Generation
+✅ Secure PIN Login
+
+✅ Authenticated Banking Session
+
+✅ Logged-in Banking Menu
 
 ✅ Deposit Money
 
@@ -130,25 +180,31 @@ Bank/
 
 ✅ Transfer Money
 
-✅ Edit Account Holder Details
+✅ Transaction History
 
-✅ Delete Account
+✅ Monthly Bank Statement
 
 ✅ Search Account by Name
 
+✅ Edit Account Details
+
+✅ Delete Account
+
 ✅ Display All Accounts
 
-✅ Transaction History
-
-✅ Monthly Bank Statement Generator
+✅ Automatic Account Number Generation
 
 ✅ Save Accounts to File
 
 ✅ Load Accounts from File
 
+✅ Persistent Storage
+
 ✅ Dynamic Collections
 
 ✅ Exception Handling
+
+✅ Session Validation
 
 ---
 
@@ -167,6 +223,8 @@ Bank/
 - File Handling
 - Exception Handling
 - Input Validation
+- Authentication
+- Session Management
 - Loops
 - Switch Statements
 - Scanner
@@ -178,11 +236,14 @@ Bank/
 # Highlights
 
 - Console Banking System
+- Secure PIN Authentication
+- Session-Based Banking
 - Persistent File Storage
 - Automatic Account Number Generation
 - Transaction History Tracking
 - Monthly Statement Generator
 - Search Functionality
+- Object-Oriented Design
 - Modular Codebase
 - Clean Architecture
 - Continuous Feature Development
@@ -196,11 +257,13 @@ This project taught me much more than Java syntax.
 Through building and continuously improving it, I learned how to:
 
 - Design reusable code
-- Break large programs into smaller methods
-- Refactor instead of rewriting
-- Apply OOP concepts to real applications
-- Work with Java Collections
-- Implement File Handling for persistent storage
+- Build authentication workflows
+- Manage user sessions
+- Apply Object-Oriented Programming to real applications
+- Work with Java Collections Framework
+- Implement persistent storage using Java IO
+- Break large programs into reusable helper methods
+- Refactor existing code instead of rewriting it
 - Build maintainable software
 - Improve project architecture over time
 
@@ -208,14 +271,15 @@ Through building and continuously improving it, I learned how to:
 
 # Upcoming Features
 
+- PIN Re-authentication for Sensitive Operations
+- Savings Account Behaviors
+- Current Account Behaviors
 - Banking Statistics Dashboard
 - Interest Calculation
-- Savings & Current Account Behaviors
 - JDBC Database Integration
-- User Authentication
 - JUnit Testing
 - Spring Boot REST API
-- GUI Version
+- GUI Version (JavaFX/Swing)
 
 ---
 
@@ -239,6 +303,12 @@ Through building and continuously improving it, I learned how to:
 
 ---
 
+## Logged-in Account Menu
+
+*(Add Screenshot Here)*
+
+---
+
 ## Monthly Statement
 
 *(Add Screenshot Here)*
@@ -255,24 +325,26 @@ Through building and continuously improving it, I learned how to:
 
 This repository is actively maintained as part of my **#100DaysOfCode** challenge.
 
-Rather than abandoning projects after learning a concept, I continuously improve this banking system by integrating every new Java topic I study.
+Rather than creating many small beginner projects, I continuously improve this banking system by integrating every new Java topic I learn.
 
-The project has grown from a basic OOP exercise into a much more complete banking application through consistent incremental development.
+Each update introduces new concepts while also improving the overall architecture of the project through refactoring and cleaner design.
+
+The goal is to grow this application alongside my software engineering skills.
 
 ---
 
 # Feedback
 
-If you have suggestions for improving the project, feel free to open an Issue or share your ideas.
+Suggestions, ideas, and code reviews are always welcome.
 
-I'm always looking to improve both the project and my coding skills.
+If you find areas that can be improved, feel free to open an Issue or start a discussion. Every piece of feedback helps me become a better developer.
 
 ---
 
-## Support
+# Support
 
-If you found this project interesting or helpful, consider giving it a **Star**.
+If you found this project interesting or helpful, consider giving it a ⭐.
 
-It motivates me to keep building and sharing my progress.
+It motivates me to continue improving the project and sharing my learning journey.
 
 Thank you for visiting!
