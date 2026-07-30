@@ -29,7 +29,6 @@ public class Account implements Transaction {
             throw new IllegalArgumentException("Initial balance cannot be negative!");
         }
 
-        //initializing transaction history 
         this.transactionHistory = new ArrayList<>();
         this.transactionHistory.add("Account was created with the initial balance of: $" + accountbalance);
     }
@@ -39,8 +38,7 @@ public class Account implements Transaction {
         if (amount > 0) { 
             this.balance = this.balance + amount;
             System.out.println("Amount deposited successfully: $" + amount);
-            //modifying for deposite tracking log 
-            this.addTransaction(" [Deposit] $" + amount + " deposited Successfully.");
+            this.addTransaction(" [Deposit] $" + amount + " deposited successfully.");
         } else {
            throw new IllegalArgumentException("Deposit amount must be greater than zero");
         }        
@@ -49,11 +47,10 @@ public class Account implements Transaction {
     // Standard withdraw method
     public void withdraw(double amount) {
         if (amount <= 0) {
-            throw new IllegalArgumentException("withdrawal amount must be greater than zero!");
+            throw new IllegalArgumentException("Withdrawal amount must be greater than zero!");
         } else if (amount <= balance) {
             this.balance = this.balance - amount;
-            System.out.println("Amount withdrew Successfully: $" + amount);
-            //adding logging to this method
+            System.out.println("Amount withdrew successfully: $" + amount);
             this.addTransaction(" [Withdraw] $" + amount + " withdrawn successfully");
             
         } else {
@@ -83,7 +80,6 @@ public class Account implements Transaction {
     public static void main(String[] args) {
         System.out.println("--- BANKING SYSTEM POLYMORPHIC ARRAYLIST --- \n");
 
-        // Declare a resizable ArrayList that manages references of type 'Account'
         ArrayList<Account> accounts = new ArrayList<>();
 
         Scanner sc = new Scanner(System.in);
@@ -138,15 +134,15 @@ public class Account implements Transaction {
                         break;                      
 
                     case 7:
-                        viewTransactionhistory(sc, accounts);
+                        viewTransactionHistory(sc, accounts);
                         break;
 
                     case 8:
-                        saveAccountsToFile(sc, accounts);
+                        saveAccountsToFile(accounts);
                         break;
 
                     case 9:
-                        loadAccountsFromFile(sc, accounts);
+                        loadAccountsFromFile(accounts);
                         break;
 
                     case 10:
@@ -162,7 +158,7 @@ public class Account implements Transaction {
                         break;
 
                     case 13:
-                        montlyBankStatement(sc, accounts);
+                        monthlyBankStatement(sc, accounts);
                         break;
 
                     case 14:
@@ -175,38 +171,21 @@ public class Account implements Transaction {
 
 
                     default:
-                        System.out.print("Invalid Option!! Please choose a option between 1 to 7.");
+                        System.out.print("Invalid Option!! Please choose a option between 1 to 14.");
 
                 }
             }
 
             catch(InputMismatchException e){
                 System.out.println("ERROR: Invalid input type! Please enter numbers only.");
-                sc.nextLine(); //avoiding infite loop 
+                sc.nextLine(); //avoiding infinite loop 
             }
         }
         sc.close();        
     }
+
     // --- HELPER METHODS FOR the cases created before in the main method ---
 
-    private static void showMenu() {
-        System.out.println("\n---MAIN MENU---");
-        System.out.println("1. Create New Account");
-        System.out.println("2. Deposit Money");
-        System.out.println("3. Withdraw Money");
-        System.out.println("4. Display All Accounts");
-        System.out.println("5. Exit System");
-        System.out.println("6. Transfer Money");
-        System.out.println("7. Transaction History.");
-        System.out.println("8. Save Accounts to File");
-        System.out.println("9. Load Accounts from File");
-        System.out.println("10. Delete Account");
-        System.out.println("11. Edit Account Details");
-        System.out.println("12. Search Account by Name");
-        System.out.println("13. Generate Monthly Bank Statement");
-        System.out.println("14. Login");
-        System.out.println("Enter Your Choice (1-14): ");
-    }
     //Method for case 4 "Display all accounts"
     private static void displayAccountDetails(ArrayList<Account> accounts) {
         if(accounts.isEmpty()){
@@ -234,10 +213,8 @@ public class Account implements Transaction {
         nextAccountNumber++;
         System.out.println("System generated Account Number: " + accNum);
 
-        //Preventing duplicate accounts
         Account existingAccount = findAccountByNumber(accounts, accNum);
         if (existingAccount != null) {
-            //Account already exists
             System.out.println("Error: Account Already exists! Try new Account number");
             return;
         } 
@@ -245,31 +222,29 @@ public class Account implements Transaction {
         System.out.println("Set PIN for your account: ");
         int accountPIN = sc.nextInt();
 
-        System.out.println("Enter Initial Deposite Balance: ");
+        System.out.println("Enter Initial Deposit Balance: ");
         Double initBalance = sc.nextDouble();
         sc.nextLine();
 
-        //Instantiates and saves it inside your dynamic list!
         accounts.add(new Account(name, accNum, initBalance, accountPIN));
-        System.out.println("Account opened and initial amount added Successfully!");
+        System.out.println("Account opened and initial amount added successfully!");
 
-        //Showing account details after creation of account
         System.out.println("\n===========================================");
         System.out.println("OPERATION SUCCESSFUL!!");
         System.out.println("Account Number : " + accNum);
         System.out.println("Holder : " + name);
-        System.out.println("Balance : $" + initBalance); // EDITED HERE: Changed literal string to actual variable printing
+        System.out.println("Balance : $" + initBalance);
         System.out.println("\n===========================================");
     }
 
-    //Method for case 2 "Deposite Money"
+    //Method for case 2 "Deposit Money"
     private static void depositMoney(Scanner sc, ArrayList<Account> accounts){ 
         System.out.println("Enter the target Account Number for Deposit: ");
         int depositaccNum = sc.nextInt();
 
         System.out.print("Enter the amount to deposit: ");
         double depositAmt = sc.nextDouble();
-        sc.nextLine(); // buffer clearing
+        sc.nextLine();
 
         Account account = findAccountByNumber(accounts, depositaccNum);
         
@@ -279,9 +254,8 @@ public class Account implements Transaction {
             try {
                 account.deposit(depositAmt);
 
-                //UI upgrade 
                 System.out.println("\n======================================");
-                System.out.println("$" + depositAmt + " deposited Successfully!" );
+                System.out.println("$" + depositAmt + " deposited successfully!" );
                 System.out.println("\n Current Balance: $" + account.getBalance());
                 System.out.println("\n Transaction Recorded!");
                 System.out.println("\n======================================");
@@ -298,12 +272,12 @@ public class Account implements Transaction {
 
         System.out.print("Enter the amount to withdraw: ");
         double withdrawalAmt = sc.nextDouble();
-        sc.nextLine(); // buffer clearing
+        sc.nextLine();
 
         Account account = findAccountByNumber(accounts, withdrawalaccNum);
 
         if(account == null) {
-            System.out.println("Error: Account: " + withdrawalaccNum + "not found!");
+            System.out.println("Error: Account: " + withdrawalaccNum + " not found!");
         } else {
             try {
                 account.withdraw(withdrawalAmt);
@@ -319,8 +293,8 @@ public class Account implements Transaction {
         }
     }
 
-    //Method for "transfering money" case 6:
-    private  static void transferMoney(Scanner sc, ArrayList<Account> accounts) {
+    //Method for "transferring money" case 6:
+    private static void transferMoney(Scanner sc, ArrayList<Account> accounts) {
         System.out.println("Enter sender's Account Number: ");
         int senderAccNum = sc.nextInt();
 
@@ -330,23 +304,19 @@ public class Account implements Transaction {
         System.out.println("Enter amount to transfer: ");
         double transferAmt = sc.nextDouble();
 
-        //calling helper method for sender account number verification
+        Account senderAccount = findAccountByNumber(accounts, senderAccNum);
+        if(senderAccount == null) {
+            System.out.println("Error: Sender not found!!");
+            return;
+        } 
 
-       Account senderAccount = findAccountByNumber(accounts, senderAccNum);
-       if(senderAccount == null) {
-        System.out.println("Error: Sender not found!!");
-        return;
-       } 
+        Account receiverAccount = findAccountByNumber(accounts, receiverAccNum);
 
-       //calling helper method for receiver account number verification 
-       Account receiverAccount = findAccountByNumber(accounts, receiverAccNum);
-
-       if( receiverAccount == null){
-        System.out.println("Error: Receiver not found!!");
-        return;
-       }
-       
-
+        if(receiverAccount == null){
+            System.out.println("Error: Receiver not found!!");
+            return;
+        }
+        
         if (transferAmt > senderAccount.getBalance()) {
             System.out.println("Error: Insufficient balance. Available Amount: $" + senderAccount.getBalance());
             return;
@@ -356,29 +326,27 @@ public class Account implements Transaction {
              senderAccount.withdraw(transferAmt);
              receiverAccount.deposit(transferAmt);
 
-             //showing messages to for withdrawal and deposit
-            senderAccount.addTransaction(" [Transfer] " + transferAmt + ", Transferred to Account: " + receiverAccNum + ".");
-            receiverAccount.addTransaction(" [Transfer] Received: $" + transferAmt + ", from Account: " + senderAccNum + ".");
+             senderAccount.addTransaction(" [Transfer] $" + transferAmt + " transferred to Account: " + receiverAccNum + ".");
+             receiverAccount.addTransaction(" [Transfer] Received: $" + transferAmt + " from Account: " + senderAccNum + ".");
 
              System.out.println("Transfer Successful!");
              System.out.println("\n===========================================");
              System.out.println("OPERATION SUCCESSFUL!!");
              System.out.println("Sender's Account Number : " + senderAccNum);
              System.out.println("Receiver's Account Number : " + receiverAccNum);
-             System.out.println("Amount transffered : $" + transferAmt);
+             System.out.println("Amount transferred : $" + transferAmt);
              System.out.println("===========================================");
         } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());            
         }
     }
 
-    //adding transactions method
-
+    //Adding transactions to history
     public void addTransaction(String description) {
         transactionHistory.add(description);
     }
 
-    //Displaying that transaction history
+    //Displaying transaction history
     public void displayTransactionHistory() {
         System.out.println("\n--- Transaction History for Account number: " + this.accountNumber + " ---");
         if (transactionHistory.isEmpty()) {
@@ -390,8 +358,8 @@ public class Account implements Transaction {
         }
     }
 
-    //Transaction History method
-    private static void viewTransactionhistory(Scanner sc, ArrayList<Account> accounts){
+    //Method for case 7 "View Transaction History"
+    private static void viewTransactionHistory(Scanner sc, ArrayList<Account> accounts){
         System.out.println("Enter the account number to check transaction history for: ");
         int accNum = sc.nextInt();
         sc.nextLine();
@@ -406,18 +374,18 @@ public class Account implements Transaction {
         }
     }   
 
-    //helper method to validate and find the account number
+    //Helper method to validate and find the account by number
     private static Account findAccountByNumber(ArrayList<Account> accounts, int accountNumber){
         for(Account acc : accounts){
             if (acc.accountNumber == accountNumber) {
-                return acc; //returning the account object if found
+                return acc;
             }
         }
-        return null; //returning null if not found
+        return null;
     }
 
     //METHOD FOR CASE 8 "SAVE ACCOUNTS TO FILE"
-    private static void saveAccountsToFile(Scanner sc, ArrayList<Account> accounts) {
+    private static void saveAccountsToFile(ArrayList<Account> accounts) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("accounts.txt"))) {
             for (Account acc : accounts) {
                 writer.write(acc.accountNumber + "," + acc.accountHolderName + "," + acc.balance);
@@ -430,11 +398,10 @@ public class Account implements Transaction {
     }
 
     //METHOD FOR CASE 9 "LOAD ACCOUNTS FROM FILE"
-    private static void loadAccountsFromFile(Scanner sc, ArrayList<Account> accounts) {
+    private static void loadAccountsFromFile(ArrayList<Account> accounts) {
         try (BufferedReader reader = new BufferedReader(new FileReader("accounts.txt"))) {
 
-            //removing old accounts from loding in the ArrayList
-            accounts.clear(); //clears old and deleted accounts from loading 
+            accounts.clear();
 
             String line;
             while ((line = reader.readLine()) != null) {
@@ -458,7 +425,6 @@ public class Account implements Transaction {
         int deleteAccNum = sc.nextInt();
         sc.nextLine();
 
-        //calling helper method to check the account number
         Account account = findAccountByNumber(accounts, deleteAccNum);
 
         if(account == null) {
@@ -468,9 +434,7 @@ public class Account implements Transaction {
             char confirmationYN = sc.next().charAt(0);
             
             if(confirmationYN == 'Y' || confirmationYN == 'y'){
-                //deleting the account
                 accounts.remove(account);
-                // EDITED HERE: Moved the success layout inside the confirmation block so it won't fire incorrectly
                 System.out.println("\n========================================");
                 System.out.println("DELETION SUCCESSFUL!");
                 System.out.println("Account Deleted : " + deleteAccNum + " has been deleted.");
@@ -486,9 +450,8 @@ public class Account implements Transaction {
     private static void editAccountDetails(Scanner sc, ArrayList<Account> accounts) {
         System.out.println("Enter the Account Number: ");
         int editingAccNumber = sc.nextInt();
-        sc.nextLine(); //clearing buffer
+        sc.nextLine();
 
-        //checking if the account number is valid or not
         Account account = findAccountByNumber(accounts, editingAccNumber);
 
         if(account == null) {
@@ -496,10 +459,9 @@ public class Account implements Transaction {
             return;        
         } 
 
-        // EDITED HERE: Flattened structure out beautifully, removed unnecessary else wrapper block, and handled scanner stream issues
         System.out.println("What you want to edit? \n 1. Name \n 2. Cancel");
         int editChoice = sc.nextInt();
-        sc.nextLine(); //another buffer cleared 
+        sc.nextLine();
 
         if(editChoice == 1) {
             System.out.println("Enter new name: ");
@@ -513,7 +475,7 @@ public class Account implements Transaction {
         }
     }  
 
-    //using a setter to set a new name 
+    //Setter to update account holder name
     public void setAccountHolderNewName(String newName) {
         this.accountHolderName = newName;
     }
@@ -542,34 +504,31 @@ public class Account implements Transaction {
     }
 
     //METHOD FOR CASE 13 "GENERATE MONTHLY BANK STATEMENT"
-    private static void montlyBankStatement(Scanner sc, ArrayList<Account> accounts) {
+    private static void monthlyBankStatement(Scanner sc, ArrayList<Account> accounts) {
         System.out.println("Enter Account number to generate statement: ");
         int statementAccNum = sc.nextInt();
 
-        //calling helper method to check if that account exists or not
         Account account = findAccountByNumber(accounts, statementAccNum);
-            if(account == null) {
-                System.out.println("Error: Account not found. Please check if the account number is correct?");
-                return;
-            } else {
-                // Print the professional bank statement here
-                System.out.println("\n=====================================");
-                System.out.println("   MONTHLY BANK STATEMENT");
-                System.out.println("=====================================");
-                System.out.println("\nAccount Number  : " + account.accountNumber);
-                System.out.println("Account Holder  : " + account.getAccountHolderName());
-                System.out.println("\n--- TRANSACTIONS ---");
-    
-                // Display transaction history                              
-                account.displayTransactionHistory();
-                
-                System.out.println("\n--- SUMMARY ---");
-                System.out.println("Current Balance : $" + account.getBalance());
-                System.out.println("\n=====================================");
-            }
+        if(account == null) {
+            System.out.println("Error: Account not found. Please check if the account number is correct?");
+            return;
+        } else {
+            System.out.println("\n=====================================");
+            System.out.println("   MONTHLY BANK STATEMENT");
+            System.out.println("=====================================");
+            System.out.println("\nAccount Number  : " + account.accountNumber);
+            System.out.println("Account Holder  : " + account.getAccountHolderName());
+            System.out.println("\n--- TRANSACTIONS ---");
+
+            account.displayTransactionHistory();
+            
+            System.out.println("\n--- SUMMARY ---");
+            System.out.println("Current Balance : $" + account.getBalance());
+            System.out.println("\n=====================================");
+        }
     }
     
-    //Method case 14 for CREATING "LOGIN"
+    //Method for case 14 "LOGIN"
     private static Account loginAccount(Scanner sc, ArrayList<Account> accounts) {
         System.out.println("Enter your Account Number: ");
         int loginAccountNumber = sc.nextInt();
@@ -578,16 +537,14 @@ public class Account implements Transaction {
         Account account = findAccountByNumber(accounts, loginAccountNumber);
 
         if(account == null){
-            System.out.println("Error: Account does not exists!");
+            System.out.println("Error: Account does not exist!");
             return null;
         } else {
             System.out.println("Enter PIN: ");
             int accPIN = sc.nextInt();
             sc.nextLine();
 
-            //checking of the pin matches teh original pin
             if (accPIN == account.getAccountPIN()) {
-                //Pin is correcta nd show login successfully
                 System.out.println("=================================================");
                 System.out.println("---LOGIN SUCCESSFUL!!---");
                 System.out.println("Welcome, " + account.getAccountHolderName());
@@ -596,27 +553,22 @@ public class Account implements Transaction {
                 return account;
 
             } else {
-                //Pin is wrong
                 System.out.println("Error: Pin is wrong, retry again!");
                 return null;
             }
         }
     }
 
-    //setting a getter for account number 
-            public int getAccountNumber() {
-                return this.accountNumber;
-            }
+    //Getter for account number
+    public int getAccountNumber() {
+        return this.accountNumber;
+    }
 
     //METHOD for account menu under login option
-
     private static void accountMenu(Scanner sc, Account loggedInAccount, ArrayList<Account> accounts) {
         System.out.println("Welcome " + loggedInAccount.getAccountHolderName());
         while(true) {
 
-            //checking if account still exists after login or not
-
-            //verification with the helper method
             Account existingAccount = findAccountByNumber(accounts, loggedInAccount.getAccountNumber());
 
             if (existingAccount == null) {
@@ -632,12 +584,10 @@ public class Account implements Transaction {
             System.out.println("6. Change Pin");
             System.out.println("9. Logout");
 
-            //taking input for the options selected 
             System.out.print("Enter your choice: ");
             int option = sc.nextInt();
             sc.nextLine();
 
-            //adding a switch case for all of the menu options 
             switch (option) {
 
             case 1:
@@ -658,9 +608,11 @@ public class Account implements Transaction {
 
             case 5:
                 monthlyStatementForLoggedInUser(loggedInAccount);
+                break;
 
             case 6:
                 changePINforLoggedInUser(sc, loggedInAccount);
+                break;
 
             case 9:
                 System.out.println("Logged out Successfully!");
@@ -674,36 +626,30 @@ public class Account implements Transaction {
 
     private static void depositForLoggedInUser(Scanner sc, Account loggedInAccount) {
 
-        //asking for the deposit amount 
         System.out.print("Enter the amount to deposit: $");
         double depositAmount = sc.nextDouble();
         sc.nextLine();
 
-        //handle negative or zero amount deposition through exception handling & deposit the amount in the account
         try{
             loggedInAccount.deposit(depositAmount);
 
             System.out.println("\n===============================================");
-            System.out.println("Deposite Successful!");
+            System.out.println("Deposit Successful!");
             System.out.println("Amount Deposited: $" + depositAmount);
             System.out.println("Current Balance: $" + loggedInAccount.getBalance());
             System.out.println("===============================================");
 
         } catch (IllegalArgumentException e) {
-            //handles invalid deposits
             System.out.println("Error: " + e.getMessage());         
         }
     }
 
     private static void withdrawForLoggedInUser(Scanner sc, Account loggedInAccount) {
         
-        // Asking for the withdrawal amount
         System.out.println("Enter the amount to withdraw: $");
         double withdrawAmount = sc.nextDouble();
-        sc.nextLine(); //buffer clearence
+        sc.nextLine();
 
-
-        // Handle invalid withdrawals and perform the transaction
         try{
             loggedInAccount.withdraw(withdrawAmount);
 
@@ -714,82 +660,60 @@ public class Account implements Transaction {
             System.out.println("===============================================");
 
         } catch (IllegalArgumentException e) {
-            //showing the error msg
             System.out.println("Error: " + e.getMessage());
         }
     }
 
-    //Method for the Transfer for logged in user
+    //Method for transfer for logged in user
     private static void transferForLoggedInUser(Scanner sc, Account loggedInAccount, ArrayList<Account> accounts) {
 
-        //Ask for recipent's account number
-        System.out.println("Enter Account number to tranfer Money in: ");
+        System.out.println("Enter Account number to transfer Money into: ");
         int receiverAccountNumber = sc.nextInt();
-        sc.nextLine(); //clearing the buffer
+        sc.nextLine();
 
-        //find the account
         Account receiverAccount = findAccountByNumber(accounts, receiverAccountNumber);
 
-        //avoiding to transfer to teh same account
         if(receiverAccountNumber == loggedInAccount.getAccountNumber()) {
             System.out.println("Error: You cannot transfer money to your own account!");
             return;
         }
 
-        //ensure if it exists
         if(receiverAccount == null) {
             System.out.println("Error: Receiver doesn't exist! Check another account number.");
             return;
-            
         }
-        //ask for thr amount
-        System.out.println("Enter teh Amount to transsfer: $");
+
+        System.out.println("Enter the Amount to transfer: $");
         double transferAmount = sc.nextDouble();
-        sc.nextLine(); //clearing buffer
+        sc.nextLine();
 
-        //perform the transfer
         try {
-            // Withdraw from the logged-in user's account
             loggedInAccount.withdraw(transferAmount);
-
-            // Deposit into the receiver's account
             receiverAccount.deposit(transferAmount);
 
-            // Record the transaction for both accounts
             loggedInAccount.addTransaction("[Transfer] $" + transferAmount + " transferred to Account: " + receiverAccount.getAccountNumber());
-
             receiverAccount.addTransaction("[Transfer] Received $" + transferAmount + " from Account: " + loggedInAccount.getAccountNumber());
 
-        // Display success message
-        System.out.println("\n===============================================");
-        System.out.println("Transfer Successful!");
-        System.out.println("Transferred Amount: $" + transferAmount);
-        System.out.println("Receiver Account: " + receiverAccount.getAccountNumber());
-        System.out.println("Current Balance: $" + loggedInAccount.getBalance());
-        System.out.println("===============================================");
+            System.out.println("\n===============================================");
+            System.out.println("Transfer Successful!");
+            System.out.println("Transferred Amount: $" + transferAmount);
+            System.out.println("Receiver Account: " + receiverAccount.getAccountNumber());
+            System.out.println("Current Balance: $" + loggedInAccount.getBalance());
+            System.out.println("===============================================");
 
         } catch (IllegalArgumentException e) {
-
-            // Handle insufficient balance or invalid amount
             System.out.println("Error: " + e.getMessage());
-
         } 
     }
 
-    //Method for transaction History for logged in user
+    //Method for transaction history for logged in user
     private static void transactionHistoryForLoggedInUser(Account loggedInAccount) {
-
-        //printimg the transaction history
         System.out.println("\n========== TRANSACTION HISTORY ==========");
         loggedInAccount.displayTransactionHistory();
-        
     }
 
-
-    //Method for MONTHLY STATEMENT for the logged in user's account
+    //Method for monthly statement for logged in user
     private static void monthlyStatementForLoggedInUser(Account loggedInAccount) {
-
-        // Display success message
         System.out.println("\n========== MONTHLY BANK STATEMENT ==========");
         System.out.println("Account Number: " + loggedInAccount.getAccountNumber());
         System.out.println("Account Holder: " + loggedInAccount.getAccountHolderName());
@@ -799,7 +723,6 @@ public class Account implements Transaction {
 
         System.out.println("\nCurrent Balance: $" + loggedInAccount.getBalance());
         System.out.println("===============================================");
-        
     }
 
     //Setter method to update the account PIN
@@ -807,48 +730,40 @@ public class Account implements Transaction {
         this.accountPIN = newPIN;
     }
 
-    //Method for changePINforLoggedInUser "changing pin"
+    //Method for changing PIN for logged in user
     private static void changePINforLoggedInUser(Scanner sc, Account loggedInAccount) {
-        //Enter current pin
-        System.out.println("Enter your current pin: ");
+        System.out.println("Enter your current PIN: ");
         int currentPin = sc.nextInt();
-        sc.nextLine(); //clearing the input buffer
+        sc.nextLine();
         
-        //if the current is incorrect then return
         if(currentPin != loggedInAccount.getAccountPIN()) {
             System.out.println("Error: Incorrect PIN!");
             return;
         }
 
-        //if all good then, enter new pin 
         System.out.println("Enter your new PIN: ");
         int newPin = sc.nextInt();
         sc.nextLine(); 
         
-        //validating of the current pin is same to new pin or not
         if(currentPin == newPin) {
             System.out.println("New PIN cannot be same as the current PIN");
             return;
         }
 
-        //confirm new pin
         System.out.println("Confirm your new PIN: ");
         int confirmPin = sc.nextInt();
         sc.nextLine();
 
-        //do they match, handle yes no condition. If yes, update the pin
         if(newPin == confirmPin) {
-            System.out.println("Pin upadted Successfully");
-            //upadting the pin 
+            System.out.println("PIN updated successfully!");
             loggedInAccount.setAccountPIN(newPin);
         } else {
-            System.out.println("Error: PINs do nit match.");
+            System.out.println("Error: PINs do not match.");
             return;
         }
-        //Success
+
         System.out.println("\n==============================================");
-        System.out.println("PIN changed Successfully!");
+        System.out.println("PIN changed successfully!");
         System.out.println("==============================================");
-    
     }
 }
