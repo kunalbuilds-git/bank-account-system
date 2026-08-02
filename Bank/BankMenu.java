@@ -39,7 +39,7 @@ public class BankMenu {
                 System.out.println("Enter Your Choice (1-14): ");
 
                 int choice = sc.nextInt();
-                sc.nextLine(); //Clears enter key from the stream
+                sc.nextLine();
 
                 if(choice == 5){
                     System.out.println("Exiting System.... Goodbye!");
@@ -61,7 +61,7 @@ public class BankMenu {
                         break;
 
                     case 4:
-                        displayAccountDetails(accounts);
+                        displayAllAccounts(accounts);
                         break;
 
                     case 6:
@@ -113,16 +113,14 @@ public class BankMenu {
 
             catch(InputMismatchException e){
                 System.out.println("ERROR: Invalid input type! Please enter numbers only.");
-                sc.nextLine(); //avoiding infinite loop 
+                sc.nextLine();
             }
         }
         sc.close();        
     }
 
-    // --- HELPER METHODS FOR the cases created before in the main method ---
-
     //Method for case 4 "Display all accounts"
-    private static void displayAccountDetails(ArrayList<Account> accounts) {
+    private static void displayAllAccounts(ArrayList<Account> accounts) {
         if(accounts.isEmpty()){
             System.out.println("There is nothing in our inventory! No active accounts.");
         }else {
@@ -494,27 +492,135 @@ public class BankMenu {
             switch (option) {
 
             case 1:
-                depositForLoggedInUser(sc, loggedInAccount);
+                // Deposit for logged-in user
+                System.out.print("Enter the amount to deposit: $");
+                double depositAmount = sc.nextDouble();
+                sc.nextLine();
+
+                try{
+                    loggedInAccount.deposit(depositAmount);
+                    System.out.println("\n===============================================");
+                    System.out.println("Deposit Successful!");
+                    System.out.println("Amount Deposited: $" + depositAmount);
+                    System.out.println("Current Balance: $" + loggedInAccount.getBalance());
+                    System.out.println("===============================================");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error: " + e.getMessage());         
+                }
                 break;
 
             case 2:
-                withdrawForLoggedInUser(sc, loggedInAccount);
+                // Withdraw for logged-in user
+                System.out.println("Enter the amount to withdraw: $");
+                double withdrawAmount = sc.nextDouble();
+                sc.nextLine();
+
+                try{
+                    loggedInAccount.withdraw(withdrawAmount);
+                    System.out.println("\n===============================================");
+                    System.out.println("Withdrawal Successful!");
+                    System.out.println("Amount Withdrawn: $" + withdrawAmount);
+                    System.out.println("Current Balance: $" + loggedInAccount.getBalance());
+                    System.out.println("===============================================");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
                 break;
 
             case 3:
-                transferForLoggedInUser(sc, loggedInAccount, accounts);
+                // Transfer for logged-in user
+                System.out.println("Enter Account number to transfer Money into: ");
+                int receiverAccountNumber = sc.nextInt();
+                sc.nextLine();
+
+                Account receiverAccount = findAccountByNumber(accounts, receiverAccountNumber);
+
+                if(receiverAccountNumber == loggedInAccount.getAccountNumber()) {
+                    System.out.println("Error: You cannot transfer money to your own account!");
+                    break;
+                }
+
+                if(receiverAccount == null) {
+                    System.out.println("Error: Receiver doesn't exist! Check another account number.");
+                    break;
+                }
+
+                System.out.println("Enter the Amount to transfer: $");
+                double transferAmount = sc.nextDouble();
+                sc.nextLine();
+
+                try {
+                    loggedInAccount.withdraw(transferAmount);
+                    receiverAccount.deposit(transferAmount);
+
+                    loggedInAccount.addTransaction("[Transfer] $" + transferAmount + " transferred to Account: " + receiverAccount.getAccountNumber());
+                    receiverAccount.addTransaction("[Transfer] Received $" + transferAmount + " from Account: " + loggedInAccount.getAccountNumber());
+
+                    System.out.println("\n===============================================");
+                    System.out.println("Transfer Successful!");
+                    System.out.println("Transferred Amount: $" + transferAmount);
+                    System.out.println("Receiver Account: " + receiverAccount.getAccountNumber());
+                    System.out.println("Current Balance: $" + loggedInAccount.getBalance());
+                    System.out.println("===============================================");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
                 break;
 
             case 4:
-                transactionHistoryForLoggedInUser(loggedInAccount);
+                // Transaction history for logged-in user
+                System.out.println("\n========== TRANSACTION HISTORY ==========");
+                loggedInAccount.displayTransactionHistory();
                 break;
 
             case 5:
-                monthlyStatementForLoggedInUser(loggedInAccount);
+                // Monthly statement for logged-in user
+                System.out.println("\n========== MONTHLY BANK STATEMENT ==========");
+                System.out.println("Account Number: " + loggedInAccount.getAccountNumber());
+                System.out.println("Account Holder: " + loggedInAccount.getAccountHolderName());
+
+                System.out.println("\nTransaction History: ");
+                loggedInAccount.displayTransactionHistory();
+
+                System.out.println("\nCurrent Balance: $" + loggedInAccount.getBalance());
+                System.out.println("===============================================");
                 break;
 
             case 6:
-                changePINforLoggedInUser(sc, loggedInAccount);
+                // Change PIN for logged-in user
+                System.out.println("Enter your current PIN: ");
+                int currentPin = sc.nextInt();
+                sc.nextLine();
+                
+                if(currentPin != loggedInAccount.getAccountPIN()) {
+                    System.out.println("Error: Incorrect PIN!");
+                    break;
+                }
+
+                System.out.println("Enter your new PIN: ");
+                int newPin = sc.nextInt();
+                sc.nextLine(); 
+                
+                if(currentPin == newPin) {
+                    System.out.println("New PIN cannot be same as the current PIN");
+                    break;
+                }
+
+                System.out.println("Confirm your new PIN: ");
+                int confirmPin = sc.nextInt();
+                sc.nextLine();
+
+                if(newPin == confirmPin) {
+                    System.out.println("PIN updated successfully!");
+                    loggedInAccount.setAccountPIN(newPin);
+                } else {
+                    System.out.println("Error: PINs do not match.");
+                    break;
+                }
+
+                System.out.println("\n==============================================");
+                System.out.println("PIN changed successfully!");
+                System.out.println("==============================================");
                 break;
 
             case 9:
@@ -525,143 +631,5 @@ public class BankMenu {
                 System.out.println("Invalid option! Please try again.");
         }
         }        
-    }
-
-    private static void depositForLoggedInUser(Scanner sc, Account loggedInAccount) {
-
-        System.out.print("Enter the amount to deposit: $");
-        double depositAmount = sc.nextDouble();
-        sc.nextLine();
-
-        try{
-            loggedInAccount.deposit(depositAmount);
-
-            System.out.println("\n===============================================");
-            System.out.println("Deposit Successful!");
-            System.out.println("Amount Deposited: $" + depositAmount);
-            System.out.println("Current Balance: $" + loggedInAccount.getBalance());
-            System.out.println("===============================================");
-
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());         
-        }
-    }
-
-    private static void withdrawForLoggedInUser(Scanner sc, Account loggedInAccount) {
-        
-        System.out.println("Enter the amount to withdraw: $");
-        double withdrawAmount = sc.nextDouble();
-        sc.nextLine();
-
-        try{
-            loggedInAccount.withdraw(withdrawAmount);
-
-            System.out.println("\n===============================================");
-            System.out.println("Withdrawal Successful!");
-            System.out.println("Amount Withdrawn: $" + withdrawAmount);
-            System.out.println("Current Balance: $" + loggedInAccount.getBalance());
-            System.out.println("===============================================");
-
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-    }
-
-    //Method for transfer for logged in user
-    private static void transferForLoggedInUser(Scanner sc, Account loggedInAccount, ArrayList<Account> accounts) {
-
-        System.out.println("Enter Account number to transfer Money into: ");
-        int receiverAccountNumber = sc.nextInt();
-        sc.nextLine();
-
-        Account receiverAccount = findAccountByNumber(accounts, receiverAccountNumber);
-
-        if(receiverAccountNumber == loggedInAccount.getAccountNumber()) {
-            System.out.println("Error: You cannot transfer money to your own account!");
-            return;
-        }
-
-        if(receiverAccount == null) {
-            System.out.println("Error: Receiver doesn't exist! Check another account number.");
-            return;
-        }
-
-        System.out.println("Enter the Amount to transfer: $");
-        double transferAmount = sc.nextDouble();
-        sc.nextLine();
-
-        try {
-            loggedInAccount.withdraw(transferAmount);
-            receiverAccount.deposit(transferAmount);
-
-            loggedInAccount.addTransaction("[Transfer] $" + transferAmount + " transferred to Account: " + receiverAccount.getAccountNumber());
-            receiverAccount.addTransaction("[Transfer] Received $" + transferAmount + " from Account: " + loggedInAccount.getAccountNumber());
-
-            System.out.println("\n===============================================");
-            System.out.println("Transfer Successful!");
-            System.out.println("Transferred Amount: $" + transferAmount);
-            System.out.println("Receiver Account: " + receiverAccount.getAccountNumber());
-            System.out.println("Current Balance: $" + loggedInAccount.getBalance());
-            System.out.println("===============================================");
-
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
-        } 
-    }
-
-    //Method for transaction history for logged in user
-    private static void transactionHistoryForLoggedInUser(Account loggedInAccount) {
-        System.out.println("\n========== TRANSACTION HISTORY ==========");
-        loggedInAccount.displayTransactionHistory();
-    }
-
-    //Method for monthly statement for logged in user
-    private static void monthlyStatementForLoggedInUser(Account loggedInAccount) {
-        System.out.println("\n========== MONTHLY BANK STATEMENT ==========");
-        System.out.println("Account Number: " + loggedInAccount.getAccountNumber());
-        System.out.println("Account Holder: " + loggedInAccount.getAccountHolderName());
-
-        System.out.println("\nTransaction History: ");
-        loggedInAccount.displayTransactionHistory();
-
-        System.out.println("\nCurrent Balance: $" + loggedInAccount.getBalance());
-        System.out.println("===============================================");
-    }
-
-    //Method for changing PIN for logged in user
-    private static void changePINforLoggedInUser(Scanner sc, Account loggedInAccount) {
-        System.out.println("Enter your current PIN: ");
-        int currentPin = sc.nextInt();
-        sc.nextLine();
-        
-        if(currentPin != loggedInAccount.getAccountPIN()) {
-            System.out.println("Error: Incorrect PIN!");
-            return;
-        }
-
-        System.out.println("Enter your new PIN: ");
-        int newPin = sc.nextInt();
-        sc.nextLine(); 
-        
-        if(currentPin == newPin) {
-            System.out.println("New PIN cannot be same as the current PIN");
-            return;
-        }
-
-        System.out.println("Confirm your new PIN: ");
-        int confirmPin = sc.nextInt();
-        sc.nextLine();
-
-        if(newPin == confirmPin) {
-            System.out.println("PIN updated successfully!");
-            loggedInAccount.setAccountPIN(newPin);
-        } else {
-            System.out.println("Error: PINs do not match.");
-            return;
-        }
-
-        System.out.println("\n==============================================");
-        System.out.println("PIN changed successfully!");
-        System.out.println("==============================================");
     }
 }
