@@ -1,6 +1,8 @@
-package Bank;
+package Bank.managers;
 
 import java.util.Scanner;
+
+import Bank.model.Account;
 
 public class LoginManager {
     

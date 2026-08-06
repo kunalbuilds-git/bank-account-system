@@ -1,4 +1,4 @@
-package Bank;
+package Bank.model;
 
 public interface Transaction {
     void deposit(double amount);

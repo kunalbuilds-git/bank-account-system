@@ -1,4 +1,4 @@
-package Bank;
+package Bank.model;
 
 import java.util.ArrayList;
 
@@ -8,7 +8,7 @@ public class Account implements Transaction {
     protected int accountNumber;
     protected double balance;
     private ArrayList<String> transactionHistory;
-    static int nextAccountNumber = 1001;
+    public static int nextAccountNumber = 1001;
     private int accountPIN;
     
     // Main constructor - sets up name, number, and checks for negative starting balance, transaction logs

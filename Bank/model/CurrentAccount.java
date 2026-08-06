@@ -1,4 +1,4 @@
-package Bank;
+package Bank.model;
 
 //separate class for Current Account
 public class CurrentAccount extends Account {

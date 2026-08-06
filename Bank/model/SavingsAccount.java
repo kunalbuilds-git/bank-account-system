@@ -1,4 +1,4 @@
-package Bank;
+package Bank.model;
 
 //creating another class/file for accounts - savings and Current
 public class SavingsAccount extends Account {
