@@ -7,121 +7,80 @@
 ![Collections](https://img.shields.io/badge/Collections-ArrayList-success)
 ![File%20Handling](https://img.shields.io/badge/File%20Handling-Java%20IO-yellow)
 ![Authentication](https://img.shields.io/badge/Authentication-PIN%20Login-blueviolet)
+![Architecture](https://img.shields.io/badge/Architecture-Clean%20Code-green)
 ![Status](https://img.shields.io/badge/Status-Actively%20Maintained-brightgreen)
-![GitHub](https://img.shields.io/badge/GitHub-Open%20Source-black)
 
 ---
 
 # About
 
-This project started as a simple Java OOP exercise and has gradually evolved into a feature-rich console banking application.
+This project started as a simple Java OOP exercise and has gradually evolved into a feature-rich console banking application with clean architecture.
 
-Instead of creating many disconnected beginner projects, I chose to continuously improve one application by integrating every new Java concept I learn.
+Instead of creating many disconnected beginner projects, I chose to continuously improve one application by integrating every new Java concept I learn while maintaining professional code quality.
 
-As I progressed through Java, I continuously enhanced this project by implementing features such as file persistence, transaction history, monthly statements, secure PIN authentication, session-based banking, account management, search functionality, and persistent storage.
+**Phase 1 (Foundation):** Core OOP concepts, account management, and file handling.
 
-This repository represents both my Java learning journey and my approach to building software incrementally while following clean coding practices.
+**Phase 2 (Refactoring):** Transformed monolithic code into clean, modular architecture with separation of concerns and dependency injection.
+
+**Phase 3 (Enhancement):** Input validation, error handling, and feature improvements.
 
 ---
 
 # Project Evolution
 
-This project has been developed incrementally as part of my Java learning journey.
-
-Implemented so far:
-
-- Java Fundamentals
-- Object-Oriented Programming
-- Collections Framework
-- File Handling
-- Persistent Storage
-- Transaction History
-- Monthly Statements
-- Account Search
-- Secure PIN Authentication
-- Session-Based Banking
-- Account Management
-- Modular Architecture
-
-The project continues to grow as I learn new Java concepts.
+- ✅ Java Fundamentals
+- ✅ Object-Oriented Programming (Inheritance, Polymorphism, Interfaces)
+- ✅ Collections Framework (ArrayList)
+- ✅ File Handling & Persistent Storage
+- ✅ Authentication & Session Management
+- ✅ Transaction History & Monthly Statements
+- ✅ Clean Architecture & Refactoring
+- ✅ Input Validation & Error Handling
+- 🔄 Interest Calculation & Subclass Features
+- 📋 Unit Testing (Upcoming)
 
 ---
 
 # Features
 
 ## Account Management
+- ✅ Create New Account
+- ✅ Display All Accounts
+- ✅ Delete Account
+- ✅ Edit Account Details
+- ✅ Search Account by Name
+- ✅ Automatic Account Number Generation
+- ✅ Input Validation (PIN, Name, Balance)
 
-- Create New Account
-- Secure Account Login (PIN Authentication)
-- Logged-in Banking Menu
-- Automatic Account Number Generation
-- Deposit Money
-- Withdraw Money
-- Transfer Money
-- Edit Account Holder Details
-- Delete Account
-- Search Account by Name
-- Display All Accounts
+## Banking Operations
+- ✅ Secure PIN-based Login
+- ✅ Deposit Money
+- ✅ Withdraw Money
+- ✅ Transfer Money (between accounts)
+- ✅ Transaction History
+- ✅ Monthly Bank Statement
 
----
-
-## Transaction Management
-
-- Transaction History
-- Automatic Transaction Recording
-- Money Transfers
-- Monthly Bank Statement Generator
-- Logged-in Transaction History
-- Logged-in Monthly Statement
-
----
+## Data Persistence
+- ✅ Save Accounts to File
+- ✅ Load Accounts from File
+- ✅ Transaction Recording
 
 ## Authentication & Security
-
-- PIN-based Login
-- Authenticated Banking Session
-- Session Validation
-- Logged-in User Operations
-- Secure Banking Workflow
-- Re-authentication Support (In Progress)
-
----
-
-## File Handling
-
-- Save Accounts to File
-- Load Accounts from File
-- Persistent Storage using Java IO
-- BufferedReader
-- BufferedWriter
-- FileReader
-- FileWriter
-- Try-with-Resources
-
----
-
-## Validation & Error Handling
-
-- Duplicate Account Prevention
-- Account Existence Validation
-- Logged-in Session Validation
-- Invalid Deposit Validation
-- Invalid Withdrawal Validation
-- Self-transfer Prevention
-- Exception Handling
-- Safe File Operations
+- ✅ PIN-based Authentication
+- ✅ Session Validation
+- ✅ Self-transfer Prevention
+- ✅ Logged-in User Operations
 
 ---
 
 # Object-Oriented Programming Concepts
 
 - Classes & Objects
-- Encapsulation
-- Inheritance
-- Polymorphism
-- Interfaces
+- Encapsulation (public/private/protected)
+- Inheritance (CurrentAccount, SavingsAccount extend Account)
+- Polymorphism (Method Overriding)
+- Interfaces (Transaction interface)
 - Constructor Chaining
-- Method Overriding
 - Abstraction
 - Static Variables
 
@@ -129,222 +88,237 @@ The project continues to grow as I learn new Java concepts.
 
 # Software Engineering Practices
 
-- Modular Architecture
-- Separation of Concerns
-- Helper Methods
-- DRY Principle
-- Code Refactoring
-- Authentication Flow
-- Session Management
-- Clean Console UI
-- Exception Handling
-- Persistent Data Management
-
----
-
-# Collections Used
-
-- `ArrayList<Account>`
-- `ArrayList<String>` (Transaction History)
+- **Modular Architecture** (Separation of concerns)
+- **Dependency Injection** (Managers receive dependencies via constructor)
+- **DRY Principle** (No code duplication)
+- **Clean Code** (Meaningful names, single responsibility)
+- **Input Validation** (PIN, name, balance verification)
+- **Exception Handling** (Try-catch, custom error messages)
+- **File Operations** (Try-with-resources for safe I/O)
 
 ---
 
 # Project Structure
 
 ```
-Bank/
+BANK-ACCOUNT-SYSTEM/
 │
-├── Account.java
-├── SavingsAccount.java
-├── CurrentAccount.java
-├── Transaction.java
+├── Bank/
+│   ├── managers/                    # Business Logic Layer
+│   │   ├── AccountManager.java      # CRUD operations
+│   │   ├── AccountFileManager.java  # File I/O operations
+│   │   ├── LoginManager.java        # Authentication
+│   │   └── LoggedInUserMenu.java    # Logged-in user features
+│   │
+│   ├── model/                       # Domain Model Layer
+│   │   ├── Account.java             # Base account class
+│   │   ├── CurrentAccount.java      # Overdraft account type
+│   │   ├── SavingsAccount.java      # Interest-bearing account type
+│   │   └── Transaction.java         # Interface for deposit/withdraw
+│   │
+│   └── BankMenu.java                # Entry Point (Orchestration)
+│
+├── accounts.txt                      # Persistent account storage
 ├── README.md
-└── data/
+└── .gitignore
 ```
 
 ---
 
-# Current Functionality
+# Architecture Overview
 
-✅ Create Account
+This project follows **Clean Architecture** principles:
 
-✅ Secure PIN Login
+**Layer 1: Domain Model (Bank/model/)**
+- Pure business logic
+- No dependencies on other layers
+- Contains: Account, CurrentAccount, SavingsAccount, Transaction interface
 
-✅ Authenticated Banking Session
+**Layer 2: Managers (Bank/managers/)**
+- Service layer implementing use cases
+- Depends on domain model
+- Contains: AccountManager, AccountFileManager, LoginManager, LoggedInUserMenu
+- Uses dependency injection for loose coupling
 
-✅ Logged-in Banking Menu
+**Layer 3: Entry Point (Bank/BankMenu.java)**
+- Orchestrates all managers
+- Handles user interaction and control flow
+- No business logic
 
-✅ Deposit Money
-
-✅ Withdraw Money
-
-✅ Transfer Money
-
-✅ Transaction History
-
-✅ Monthly Bank Statement
-
-✅ Search Account by Name
-
-✅ Edit Account Details
-
-✅ Delete Account
-
-✅ Display All Accounts
-
-✅ Automatic Account Number Generation
-
-✅ Save Accounts to File
-
-✅ Load Accounts from File
-
-✅ Persistent Storage
-
-✅ Dynamic Collections
-
-✅ Exception Handling
-
-✅ Session Validation
+**Benefits:**
+- ✅ Easy to test (no hard dependencies)
+- ✅ Easy to extend (add new features without breaking existing code)
+- ✅ Easy to maintain (clear responsibility for each class)
+- ✅ Easy to refactor (low coupling)
 
 ---
 
-# Concepts Practiced
+# Current Status
 
-- Classes & Objects
-- Constructors
-- Encapsulation
-- Inheritance
-- Polymorphism
-- Interfaces
-- Constructor Chaining
-- Method Overriding
-- Static Variables
-- ArrayLists
-- File Handling
-- Exception Handling
-- Input Validation
-- Authentication
-- Session Management
-- Loops
-- Switch Statements
-- Scanner
-- Modular Programming
-- Clean Code Practices
+## Implemented ✅
+- [x] Complete account management (CRUD)
+- [x] Secure authentication system
+- [x] File persistence
+- [x] Transaction tracking
+- [x] Input validation
+- [x] Clean modular architecture
+- [x] Error handling
+- [x] Logged-in user menu
+- [x] Money transfers
+
+## In Progress 🔄
+- [ ] Interest calculation for Savings Accounts
+- [ ] Overdraft features for Current Accounts
+
+## Upcoming 📋
+- [ ] PIN re-authentication for sensitive operations
+- [ ] Banking dashboard with statistics
+- [ ] Unit testing (JUnit)
+- [ ] Database integration (JDBC)
+- [ ] Spring Boot REST API
+- [ ] GUI version (JavaFX)
+
+---
+
+# Technologies & Concepts
+
+| Category | Technologies |
+|----------|--------------|
+| **Language** | Java 8+ |
+| **Collections** | ArrayList, String manipulation |
+| **File I/O** | BufferedReader, BufferedWriter, FileReader, FileWriter |
+| **Concepts** | OOP, Inheritance, Polymorphism, Interfaces, Static Variables |
+| **Patterns** | Dependency Injection, MVC-inspired Architecture |
+| **Tools** | Git, GitHub, VS Code |
+
+---
+
+# Key Learning Outcomes
+
+Through building and continuously refactoring this project, I learned:
+
+1. **Design Patterns** — How to structure large applications
+2. **Clean Code** — Writing maintainable and readable code
+3. **OOP Mastery** — Real-world application of OOP principles
+4. **Refactoring** — Improving existing code without breaking functionality
+5. **Architecture** — Building scalable systems with clear separation of concerns
+6. **Collections Framework** — Effective use of Java collections
+7. **File I/O** — Persistent storage and data management
+8. **Git Workflow** — Incremental commits and version control
+
+---
+
+# What Makes This Project Special
+
+- ⭐ **Continuous Improvement** — Not a one-time project, but an evolving codebase
+- ⭐ **Clean Architecture** — Refactored to follow professional standards
+- ⭐ **Real-world Features** — Authentication, persistence, transactions
+- ⭐ **Learning Journey** — Shows progression from basic to advanced concepts
+- ⭐ **Production-ready Code** — No compilation errors, professional structure
 
 ---
 
 # Highlights
 
-- Console Banking System
-- Secure PIN Authentication
-- Session-Based Banking
-- Persistent File Storage
-- Automatic Account Number Generation
-- Transaction History Tracking
-- Monthly Statement Generator
-- Search Functionality
-- Object-Oriented Design
-- Modular Codebase
-- Clean Architecture
-- Continuous Feature Development
+✨ Modular, maintainable codebase  
+✨ Clean architecture with dependency injection  
+✨ Secure PIN-based authentication  
+✨ Persistent file storage  
+✨ Automatic account number generation  
+✨ Transaction tracking & monthly statements  
+✨ Comprehensive input validation  
+✨ Object-oriented design throughout  
 
 ---
 
-# What I Learned
+# How to Run
 
-This project taught me much more than Java syntax.
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/bank-account-system.git
+cd bank-account-system
 
-Through building and continuously improving it, I learned how to:
+# Compile
+javac Bank/model/*.java Bank/managers/*.java Bank/BankMenu.java
 
-- Design reusable code
-- Build authentication workflows
-- Manage user sessions
-- Apply Object-Oriented Programming to real applications
-- Work with Java Collections Framework
-- Implement persistent storage using Java IO
-- Break large programs into reusable helper methods
-- Refactor existing code instead of rewriting it
-- Build maintainable software
-- Improve project architecture over time
-
----
-
-# Upcoming Features
-
-- PIN Re-authentication for Sensitive Operations
-- Savings Account Behaviors
-- Current Account Behaviors
-- Banking Statistics Dashboard
-- Interest Calculation
-- JDBC Database Integration
-- JUnit Testing
-- Spring Boot REST API
-- GUI Version (JavaFX/Swing)
-
----
-
-# Tech Stack
-
-- Java
-- Java Collections Framework
-- Java IO
-- Object-Oriented Programming
-- Git
-- GitHub
-- VS Code
-
----
-
-# Preview
-
-## Main Menu
-
-*(Add Screenshot Here)*
-
----
-
-## Logged-in Account Menu
-
-*(Add Screenshot Here)*
-
----
-
-## Monthly Statement
-
-*(Add Screenshot Here)*
-
----
-
-## Transaction History
-
-*(Add Screenshot Here)*
+# Run
+java Bank.BankMenu
+```
 
 ---
 
 # Development Journey
 
-This repository is actively maintained as part of my **#100DaysOfCode** challenge.
+This repository is actively maintained as part of my **#100DaysOfCode** challenge and ongoing Java learning journey.
 
-Rather than creating many small beginner projects, I continuously improve this banking system by integrating every new Java topic I learn.
-
-Each update introduces new concepts while also improving the overall architecture of the project through refactoring and cleaner design.
-
-The goal is to grow this application alongside my software engineering skills.
+Each commit represents:
+- A new feature implemented
+- A refactoring improvement
+- A concept mastered
+- A step forward in software engineering understanding
 
 ---
 
-# Feedback
+# Future Roadmap
 
-Suggestions, ideas, and code reviews are always welcome.
+**Q1 2025:**
+- Interest calculation for savings accounts
+- Overdraft limits for current accounts
+- Enhanced transaction filtering
 
-If you find areas that can be improved, feel free to open an Issue or start a discussion. Every piece of feedback helps me become a better developer.
+**Q2 2025:**
+- Unit testing with JUnit
+- JDBC database integration
+- Admin dashboard features
+
+**Q3 2025:**
+- Spring Boot REST API
+- JavaFX GUI version
+- Mobile app consideration
+
+---
+
+# Code Quality Standards
+
+This project maintains:
+- ✅ Zero compilation errors
+- ✅ Consistent naming conventions
+- ✅ Comprehensive error handling
+- ✅ Professional JavaDoc comments (in progress)
+- ✅ DRY principle (no code duplication)
+- ✅ Single Responsibility Principle
+- ✅ Dependency injection pattern
+
+---
+
+# Feedback & Contributions
+
+Suggestions, ideas, and code reviews are always welcome!
+
+If you find areas to improve or have ideas for features, please:
+- Open an Issue
+- Start a Discussion
+- Submit a Pull Request
+
+Every piece of feedback helps me grow as a developer.
 
 ---
 
 # Support
 
-If you found this project interesting or helpful, consider giving it a ⭐.
+If you found this project interesting or educational, consider giving it a ⭐!
 
-It motivates me to continue improving the project and sharing my learning journey.
+It motivates me to continue improving the codebase and sharing my learning journey.
 
-Thank you for visiting!
+---
+
+# License
+
+This project is open source and available for learning purposes.
+
+---
+
+**Happy Coding! 🚀**
+
+*Last Updated: August 14, 2026*  
+*Actively Maintained as part of #100DaysOfCode Challenge*
